@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatFormFieldControl } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-sign-in',
