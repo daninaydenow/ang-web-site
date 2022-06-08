@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,18 +12,31 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {}
 
   form = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
   });
 
-  getErrorMessage() {
-    return this.form.get('email')?.hasError('email')
-      ? 'Wrong email or password'
+  getEmailError() {
+    if (this.form.get('email')?.hasError('required')) {
+      return 'You must enter an email';
+    }
+
+    return this.form.get('email')?.hasError('email') ? 'Not a valid email' : '';
+  }
+
+  getPasswordError() {
+    if (this.form.get('password')?.hasError('required')) {
+      return 'You must enter a password';
+    }
+
+    return this.form.get('password')?.hasError('password')
+      ? 'Not a valid password'
       : '';
   }
 
   onSubmit() {
-    console.log(this.form.valueChanges);
-    console.log(this.form.value);
+    if (this.form.valid) {
+      console.log('Works Fine');
+    }
   }
 }
