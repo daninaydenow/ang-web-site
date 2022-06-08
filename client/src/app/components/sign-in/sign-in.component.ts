@@ -16,7 +16,7 @@ export class SignInComponent implements OnInit {
     password: new FormControl('', Validators.required),
   });
 
-  getEmailError() {
+  getEmailError(): string {
     if (this.form.get('email')?.hasError('required')) {
       return 'You must enter an email';
     }
@@ -24,7 +24,7 @@ export class SignInComponent implements OnInit {
     return this.form.get('email')?.hasError('email') ? 'Not a valid email' : '';
   }
 
-  getPasswordError() {
+  getPasswordError(): string {
     if (this.form.get('password')?.hasError('required')) {
       return 'You must enter a password';
     }
@@ -35,8 +35,6 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      console.log('Works Fine');
-    }
+    console.log(this.form);
   }
 }

@@ -15,6 +15,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [AppComponent, SignInComponent, NavbarComponent],
@@ -29,6 +33,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent],
