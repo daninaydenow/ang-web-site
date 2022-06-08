@@ -1,9 +1,18 @@
-import { HttpClient } from '@angular/common/http';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  UserCredential,
+} from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private http: HttpClient) {}
+  constructor(private auth: Auth) {}
+
+  signIn(email: string, password: string): Promise<UserCredential> {
+    return signInWithEmailAndPassword(this.auth, email, password);
+  }
 }
