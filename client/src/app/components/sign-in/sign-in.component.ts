@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { UserCredential } from '@angular/fire/auth';
+
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -7,7 +10,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent implements OnInit {
-  constructor() {}
+  constructor(private atuhService: AuthenticationService) {
+    localStorage.clear();
+  }
 
   ngOnInit(): void {}
 
@@ -35,6 +40,28 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form);
+    if (this.form.valid) {
+      this.atuhService
+        .signIn(this.form.get('email')?.value, this.form.get('password')?.value)
+        .then((userCredentials: UserCredential) => {
+          userCredentials.user
+            .getIdToken(true)
+            .then((token) => {
+              localStorage.setItem(
+                'user',
+                JSON.stringify({
+                  email: userCredentials.user.email,
+                  token: token,
+                })
+              );
+            })
+            .catch((err) => {
+              alert(err);
+            });
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
   }
 }
