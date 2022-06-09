@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -7,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
-  constructor() {
+  constructor(private authService: AuthenticationService) {
     localStorage.clear();
   }
 
@@ -19,9 +20,25 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit() {}
+  onSubmit() {
+    if (this.form.valid) {
+      this.signUp();
+    }
+  }
 
-  getEmailError() {}
+  getEmailError() {
+    if (this.form.get('email')?.hasError('required')) {
+      return 'Pease enter an email';
+    }
+    return this.form.get('email')?.hasError('email') ? 'Not a valid email' : '';
+  }
 
   getPasswordError() {}
+
+  async signUp() {
+    try {
+    } catch (error) {
+      alert(error);
+    }
+  }
 }
