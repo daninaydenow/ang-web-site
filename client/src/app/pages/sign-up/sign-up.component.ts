@@ -43,6 +43,15 @@ export class SignUpComponent implements OnInit {
       : '';
   }
 
+  getRePasswordError() {
+    if (this.form.get('rePassword')?.hasError('required')) {
+      return 'Please repeat your password';
+    }
+    return this.form.get('rePassword')?.hasError('rePassword')
+      ? 'Wrong password'
+      : '';
+  }
+
   async signUp(): Promise<boolean> {
     try {
       const userCredentials: UserCredential = await this.authService.signUp(
