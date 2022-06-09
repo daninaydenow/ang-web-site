@@ -39,8 +39,12 @@ export class SignUpComponent implements OnInit {
       this.form.valid &&
       this.form.get('password')?.value === this.form.get('rePassword')?.value
     ) {
-      this.signUp().then(() => {
-        this.router.navigate(['/']);
+      this.signUp().then((isSuccess) => {
+        if (isSuccess) {
+          this.router.navigate(['/']);
+        } else {
+          return;
+        }
       });
     }
   }
