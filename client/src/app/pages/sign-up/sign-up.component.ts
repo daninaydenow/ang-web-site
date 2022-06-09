@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserCredential } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -33,10 +34,23 @@ export class SignUpComponent implements OnInit {
     return this.form.get('email')?.hasError('email') ? 'Not a valid email' : '';
   }
 
-  getPasswordError() {}
+  getPasswordError() {
+    if (this.form.get('password')?.hasError('required')) {
+      return 'Please enter a password';
+    }
+    return this.form.get('password')?.hasError('password')
+      ? 'Wrong password'
+      : '';
+  }
 
   async signUp() {
     try {
+      const userCredentials: UserCredential = await this.authService.signUp(
+        this.form.get('email')?.value,
+        this.form.get('password')?.value
+      );
+
+      const token: string = await userCredentials.user.getIdToken(false);
     } catch (error) {
       alert(error);
     }
