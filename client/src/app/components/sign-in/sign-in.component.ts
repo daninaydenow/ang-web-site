@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserCredential } from '@angular/fire/auth';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -10,7 +11,10 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent implements OnInit {
-  constructor(private authService: AuthenticationService) {
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {
     // clear local storage on initialization
     localStorage.clear();
   }
@@ -45,7 +49,13 @@ export class SignInComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      this.singIn();
+      this.singIn().then((isSuccess) => {
+        if (isSuccess) {
+          this.router.navigate(['/']);
+        } else {
+          return;
+        }
+      });
       // PROMISE.THEN VARIANT
       //
       //
@@ -73,7 +83,7 @@ export class SignInComponent implements OnInit {
     }
   }
 
-  async singIn() {
+  async singIn(): Promise<boolean> {
     try {
       // get user credentials
       const userCredentials: UserCredential = await this.authService.signIn(
@@ -81,7 +91,7 @@ export class SignInComponent implements OnInit {
         this.form.get('password')?.value
       );
       // extract token from credentials
-      const token = await userCredentials.user.getIdToken(false);
+      const token: string = await userCredentials.user.getIdToken(false);
       // create user object
       const user = {
         email: userCredentials.user.email,
@@ -89,8 +99,10 @@ export class SignInComponent implements OnInit {
       };
       // save user object in local storage
       localStorage.setItem('user', JSON.stringify(user));
+      return true;
     } catch (error) {
       alert(error);
+      return false;
     }
   }
 }
