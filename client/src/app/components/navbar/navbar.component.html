@@ -8,17 +8,22 @@
   </button>
   <span>My App</span>
   <span class="example-spacer"></span>
+
   <a
+    *ngIf="!user"
     mat-icon-button
     class="example-icon login-icon"
     aria-label="Icon-button with login icon"
+    routerLink="/sign-in"
   >
     <mat-icon>login</mat-icon>
   </a>
   <a
+    *ngIf="!user"
     mat-icon-button
     class="example-icon person_add-icon"
     aria-label="Icon-button with person_add icon"
+    routerLink="/sign-up"
   >
     <mat-icon>person_add</mat-icon>
   </a>
