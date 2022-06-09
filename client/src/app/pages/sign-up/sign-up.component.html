@@ -1,1 +1,43 @@
-<p>sign-up works!</p>
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <div>
+      <h1 class="heading">Sing in</h1>
+    </div>
+    <div class="example-container">
+      <mat-form-field matFormFieldControl appearance="fill">
+        <mat-label>Enter your email</mat-label>
+        <input
+          matInput
+          placeholder="pat@example.com"
+          name="email"
+          formControlName="email"
+          required
+        />
+        <mat-error *ngIf="form.get('email')">{{ getEmailError() }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="example-container">
+      <mat-form-field matFormFieldControl appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          type="password"
+          name="password"
+          formControlName="password"
+          required
+        />
+        <mat-error *ngIf="form.get('password')">{{
+          getPasswordError()
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="this.form.status === 'INVALID'"
+    >
+      Submit
+    </button>
+  </form>
+</div>
