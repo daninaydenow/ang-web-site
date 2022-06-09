@@ -43,7 +43,7 @@ export class SignUpComponent implements OnInit {
       : '';
   }
 
-  async signUp() {
+  async signUp(): Promise<boolean> {
     try {
       const userCredentials: UserCredential = await this.authService.signUp(
         this.form.get('email')?.value,
@@ -51,8 +51,15 @@ export class SignUpComponent implements OnInit {
       );
 
       const token: string = await userCredentials.user.getIdToken(false);
+      const user = {
+        email: userCredentials.user.email,
+        token,
+      };
+      localStorage.setItem('user', JSON.stringify(user));
+      return true;
     } catch (error) {
       alert(error);
+      return false;
     }
   }
 }
