@@ -47,7 +47,7 @@ export class SignInComponent implements OnInit {
       : '';
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.form.valid) {
       this.singIn().then((isSuccess) => {
         if (isSuccess) {
