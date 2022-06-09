@@ -22,7 +22,16 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    if (this.form.valid) {
+    if (
+      this.form.get('password')?.value !== this.form.get('rePassword')?.value
+    ) {
+      alert('Passwords do not match');
+      return;
+    }
+    if (
+      this.form.valid &&
+      this.form.get('password')?.value === this.form.get('rePassword')?.value
+    ) {
       this.signUp();
     }
   }
