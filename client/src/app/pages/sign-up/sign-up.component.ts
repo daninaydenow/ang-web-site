@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserCredential } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -9,7 +10,11 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
-  constructor(private authService: AuthenticationService) {
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {
+    // clear local storage on initialization
     localStorage.clear();
   }
 
@@ -22,27 +27,32 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
+    // Check for passwords missmatch
     if (
       this.form.get('password')?.value !== this.form.get('rePassword')?.value
     ) {
       alert('Passwords do not match');
       return;
     }
+    // If all valid, perform signUp
     if (
       this.form.valid &&
       this.form.get('password')?.value === this.form.get('rePassword')?.value
     ) {
-      this.signUp();
+      this.signUp().then(() => {
+        this.router.navigate(['/']);
+      });
     }
   }
 
+  // error extraction method for email control
   getEmailError() {
     if (this.form.get('email')?.hasError('required')) {
       return 'Pease enter an email';
     }
     return this.form.get('email')?.hasError('email') ? 'Not a valid email' : '';
   }
-
+  // error extraction method for password control
   getPasswordError() {
     if (this.form.get('password')?.hasError('required')) {
       return 'Please enter a password';
@@ -51,7 +61,7 @@ export class SignUpComponent implements OnInit {
       ? 'Wrong password'
       : '';
   }
-
+  // error extraction method for rePassword control
   getRePasswordError() {
     if (this.form.get('rePassword')?.hasError('required')) {
       return 'Please repeat your password';
@@ -63,16 +73,19 @@ export class SignUpComponent implements OnInit {
 
   async signUp(): Promise<boolean> {
     try {
+      // get user credentials
       const userCredentials: UserCredential = await this.authService.signUp(
         this.form.get('email')?.value,
         this.form.get('password')?.value
       );
-
+      // extract token from credentials
       const token: string = await userCredentials.user.getIdToken(false);
+      // create user object
       const user = {
         email: userCredentials.user.email,
         token,
       };
+      // save user object in local storage
       localStorage.setItem('user', JSON.stringify(user));
       return true;
     } catch (error) {
