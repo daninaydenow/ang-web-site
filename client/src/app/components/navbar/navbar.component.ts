@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  user: string | null;
+  user;
   constructor() {
     this.user = localStorage.getItem('user');
   }
