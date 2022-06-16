@@ -16,11 +16,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { HomeComponent } from './pages/home/home.component';
+
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { SignUpComponent } from './pages/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
     SignInComponent,
     NavbarComponent,
     SignUpComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
