@@ -96,6 +96,7 @@ export class SignInComponent implements OnInit {
       const token: string = await userCredentials.user.getIdToken(false);
       // create user object
       const user: User = {
+        uid: userCredentials.user.uid,
         email: userCredentials.user.email,
         token,
       };
