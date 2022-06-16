@@ -1,14 +1,7 @@
 <mat-toolbar color="primary">
-  <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with menu icon"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>My App</span>
+  <a routerLink="/" style="text-decoration: none; color: white">Movies</a>
   <span class="example-spacer"></span>
-
+  <!-- Guest buttons -->
   <a
     *ngIf="!user"
     mat-icon-button
@@ -26,5 +19,15 @@
     routerLink="/sign-up"
   >
     <mat-icon>person_add</mat-icon>
+  </a>
+  <!-- Logged in buttons -->
+  <a
+    *ngIf="user"
+    mat-icon-button
+    class="example-icon logout"
+    aria-label="Icon-button with logout"
+    routerLink="/sign-out"
+  >
+    <mat-icon>logout</mat-icon>
   </a>
 </mat-toolbar>
