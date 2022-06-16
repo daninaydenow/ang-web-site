@@ -86,6 +86,7 @@ export class SignUpComponent implements OnInit {
       const token: string = await userCredentials.user.getIdToken(false);
       // create user object
       const user = {
+        uid: userCredentials.user.uid,
         email: userCredentials.user.email,
         token,
       };
