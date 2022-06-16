@@ -16,5 +16,8 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // persist user upon refresh
+    this.user = JSON.parse(localStorage.getItem('user')!);
+  }
 }
