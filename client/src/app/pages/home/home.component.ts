@@ -19,6 +19,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.getLocalStorageUser();
-    this.userName = this.user.email?.split('@')[0];
+    this.userName = this.user?.email?.split('@')[0];
   }
 }
