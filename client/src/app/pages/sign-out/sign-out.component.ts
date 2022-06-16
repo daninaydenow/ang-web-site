@@ -17,8 +17,11 @@ export class SignOutComponent implements OnInit {
     this.authService
       .signOut()
       .then(() => {
+        // clear local storage
         localStorage.clear();
+        // refresh user value
         this.authService.getLocalStorageUser();
+        // navigate to sign in page
         this.router.navigate(['/sign-in']);
       })
       .catch((error) => {
