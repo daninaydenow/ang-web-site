@@ -18,6 +18,7 @@ export class SignOutComponent implements OnInit {
       .signOut()
       .then(() => {
         localStorage.clear();
+        this.authService.getLocalStorageUser();
         this.router.navigate(['/sign-in']);
       })
       .catch((error) => {
