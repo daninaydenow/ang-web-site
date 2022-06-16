@@ -4,6 +4,7 @@ import { UserCredential } from '@angular/fire/auth';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-sign-in',
@@ -51,6 +52,7 @@ export class SignInComponent implements OnInit {
     if (this.form.valid) {
       this.singIn().then((isSuccess) => {
         if (isSuccess) {
+          this.authService.getLocalStorageUser();
           this.router.navigate(['/']);
         } else {
           return;
@@ -93,7 +95,7 @@ export class SignInComponent implements OnInit {
       // extract token from credentials
       const token: string = await userCredentials.user.getIdToken(false);
       // create user object
-      const user = {
+      const user: User = {
         email: userCredentials.user.email,
         token,
       };
