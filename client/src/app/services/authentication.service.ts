@@ -1,5 +1,6 @@
 import {
   Auth,
+  signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   UserCredential,
@@ -26,5 +27,9 @@ export class AuthenticationService {
 
   signUp(email: string, password: string): Promise<UserCredential> {
     return createUserWithEmailAndPassword(this.auth, email, password);
+  }
+
+  signOut(): Promise<void> {
+    return signOut(this.auth);
   }
 }
