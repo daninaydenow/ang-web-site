@@ -19,6 +19,13 @@ export class AuthenticationService {
   user$ = this.userSource.asObservable();
   constructor(private auth: Auth) {}
 
+  isAuthenticated(): boolean {
+    if (localStorage.getItem('user')) {
+      return true;
+    }
+    return false;
+  }
+
   getLocalStorageUser() {
     this.userSource.next(JSON.parse(localStorage.getItem('user')!));
   }
