@@ -10,6 +10,7 @@ export class MovieService {
 
   getAll() {
     const options = {
+      method: 'GET',
       headers: {
         'X-RapidAPI-Key': '58b017252fmsh8384cd09f5f34bbp16a752jsn216133d0bee5',
         'X-RapidAPI-Host': 'movies-app1.p.rapidapi.com',

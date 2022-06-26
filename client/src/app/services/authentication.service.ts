@@ -6,14 +6,16 @@ import {
   UserCredential,
 } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private userSource = new Subject<User>();
+  public userSource = new BehaviorSubject<User>(
+    JSON.parse(localStorage.getItem('user')!)
+  );
   user$ = this.userSource.asObservable();
   constructor(private auth: Auth) {}
 
