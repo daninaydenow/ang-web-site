@@ -4,11 +4,11 @@ import { User } from 'src/app/models/User';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit, OnDestroy {
   user!: User;
   userName: string | undefined = '';
   movies: any = [];

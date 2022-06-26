@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
-import { HomeComponent } from './pages/home/home.component';
+import { ProductsComponent } from './pages/products/products.component';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -34,7 +34,7 @@ import { ItemComponent } from './components/item/item.component';
     SignInComponent,
     NavbarComponent,
     SignUpComponent,
-    HomeComponent,
+    ProductsComponent,
     SignOutComponent,
     ItemComponent,
   ],
