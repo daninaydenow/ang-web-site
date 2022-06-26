@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppComponent } from './app.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
@@ -24,6 +25,7 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { SignOutComponent } from './pages/sign-out/sign-out.component';
+import { ItemComponent } from './components/item/item.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { SignOutComponent } from './pages/sign-out/sign-out.component';
     SignUpComponent,
     HomeComponent,
     SignOutComponent,
+    ItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { SignOutComponent } from './pages/sign-out/sign-out.component';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    MatCardModule,
     HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
