@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
   selector: 'app-home',
@@ -10,15 +11,20 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class HomeComponent implements OnInit {
   user!: User;
   userName: string | undefined = '';
-  favourites = [];
-  constructor(private authService: AuthenticationService) {
+  movies: any = [];
+  constructor(
+    private authService: AuthenticationService,
+    private movieService: MovieService
+  ) {
     this.authService.user$.subscribe((user) => {
       this.user = user;
     });
   }
 
   ngOnInit(): void {
-    this.authService.getLocalStorageUser();
     this.userName = this.user?.email?.split('@')[0];
+    this.movieService.getAll().subscribe((response) => {
+      this.movies.push(response);
+    });
   }
 }
