@@ -58,30 +58,6 @@ export class SignInComponent implements OnInit {
           return;
         }
       });
-      // PROMISE.THEN VARIANT
-      //
-      //
-      // this.authService
-      //   .signIn(this.form.get('email')?.value, this.form.get('password')?.value)
-      //   .then((userCredentials: UserCredential) => {
-      //     userCredentials.user
-      //       .getIdToken(true)
-      //       .then((token) => {
-      //         localStorage.setItem(
-      //           'user',
-      //           JSON.stringify({
-      //             email: userCredentials.user.email,
-      //             token: token,
-      //           })
-      //         );
-      //       })
-      //       .catch((err) => {
-      //         alert(err);
-      //       });
-      //   })
-      //   .catch((err) => {
-      //     alert(err.message);
-      //   });
     }
   }
 
