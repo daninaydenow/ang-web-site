@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Product } from 'src/app/models/Product';
 import { User } from 'src/app/models/User';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-products',
@@ -10,17 +12,21 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   user!: User;
-  userName: string | undefined = '';
-  movies: any = [];
+  products!: Product[];
   subscribtion!: Subscription;
-  constructor(private authService: AuthenticationService) {
+  constructor(
+    private authService: AuthenticationService,
+    private productService: ProductService
+  ) {
     this.subscribtion = this.authService.user$.subscribe((user) => {
       this.user = user;
     });
   }
 
   ngOnInit(): void {
-    this.userName = this.user?.email?.split('@')[0];
+    this.productService.getAllProducts().subscribe((res) => {
+      this.products = res;
+    });
   }
 
   ngOnDestroy(): void {

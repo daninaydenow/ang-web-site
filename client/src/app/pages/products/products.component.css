@@ -1,13 +1,5 @@
-.header {
-  padding: 20px;
-  text-align: center;
-}
-
-.user > h1 {
-  padding: 20px;
-  font-size: 60px;
-}
-
 .container {
   padding: 30px;
+  display: flex;
+  flex-direction: column;
 }
