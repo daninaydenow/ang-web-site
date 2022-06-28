@@ -28,6 +28,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { SignOutComponent } from './pages/sign-out/sign-out.component';
 import { ItemComponent } from './components/item/item.component';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ItemComponent } from './components/item/item.component';
     ProductsComponent,
     SignOutComponent,
     ItemComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
