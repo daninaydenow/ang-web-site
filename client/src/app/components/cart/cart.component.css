@@ -1,0 +1,25 @@
+.container {
+padding: 30px;
+}
+
+/* Structure */
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+
+
+img {
+    object-fit: contain;
+    height: 200px;
+    width: 150px;
+}
+
+td {
+    padding: 10px;
+}

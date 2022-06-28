@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatGridListModule } from '@angular/material/grid-list';
+import {MatTableModule} from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
@@ -55,6 +56,7 @@ import { CartComponent } from './components/cart/cart.component';
     MatCardModule,
     MatBadgeModule,
     MatGridListModule,
+    MatTableModule,
     HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
