@@ -1,14 +1,17 @@
 .example-card {
   width: 250px;
-  flex-grow: 1;
+  height: 400px;
 }
 
 .mat-card-image {
   object-fit: contain;
-  max-height: 200px;
+  height: 200px;
+}
+.mat-card-content {
+  height: 150px;
 }
 
-.fifty-chars {
+.thirty-chars {
   width: 30ch;
   overflow: hidden;
   white-space: nowrap;
