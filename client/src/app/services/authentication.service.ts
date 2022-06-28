@@ -13,7 +13,7 @@ import { User } from '../models/User';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  public userSource = new BehaviorSubject<User>(
+  private userSource = new BehaviorSubject<User>(
     JSON.parse(localStorage.getItem('user')!)
   );
   user$ = this.userSource.asObservable();
