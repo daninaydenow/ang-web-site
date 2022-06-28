@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CartComponent } from './components/cart/cart.component';
 import { AuthGuard } from './guards/auth.guard';
 
 import { ProductsComponent } from './pages/products/products.component';
@@ -25,6 +26,8 @@ const routes: Routes = [
     component: ProductsComponent,
     canActivate: [AuthGuard],
   },
+  { path: 'my-cart', 
+    component: CartComponent}
 ];
 
 @NgModule({
