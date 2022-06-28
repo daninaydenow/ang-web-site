@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/User';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,10 +12,15 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class NavbarComponent implements OnInit, OnDestroy {
   user!: User;
   subscribtion!: Subscription;
-  constructor(private authService: AuthenticationService) {
+  cartItemsCount!: number;
+  constructor(private authService: AuthenticationService, private cartService: CartService) {
     this.subscribtion = this.authService.user$.subscribe((user) => {
       this.user = user;
     });
+
+    this.cartService.cartList$.subscribe(res => {
+      this.cartItemsCount = res.length;
+    })
   }
 
   ngOnInit(): void {}
