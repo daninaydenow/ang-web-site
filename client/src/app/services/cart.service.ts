@@ -16,8 +16,10 @@ export class CartService {
     this.cartSource.next(this.cart);
   }
 
-  removeFromCart(product: Product, index: number): void {
+  removeFromCart(product: Product): void {
+    const index = this.cart.indexOf(product);
     this.cart.splice(index, 1);
     this.cartSource.next(this.cart);
   }
+  
 }
