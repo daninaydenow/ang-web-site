@@ -8,5 +8,5 @@ import { AuthenticationService } from './services/authentication.service';
   providers: [AuthenticationService],
 })
 export class AppComponent {
-  title = 'client';
+  title = 'Shop app';
 }
