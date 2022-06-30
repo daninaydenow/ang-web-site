@@ -51,4 +51,5 @@
           <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
         </tr>
       </table>
+      <mat-card *ngIf="dataSource.data.length !== 0" align="end">Total: {{getCartTotal()}} BGN</mat-card>
 </div>

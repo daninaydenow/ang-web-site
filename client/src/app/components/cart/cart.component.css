@@ -12,7 +12,9 @@ table {
     width: 100%;
   }
 
-
+.mat-card {
+  margin-top: 10px;
+}
 
 img {
     object-fit: contain;

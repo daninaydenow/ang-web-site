@@ -21,5 +21,11 @@ export class CartService {
     this.cart.splice(index, 1);
     this.cartSource.next(this.cart);
   }
+
+  getTotalPrice(): string {
+    let totalPrice: number = 0;
+    this.cart.forEach(x => totalPrice += Number(x.price))
+    return totalPrice.toFixed(2);
+  }
   
 }
