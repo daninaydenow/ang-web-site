@@ -44,8 +44,8 @@ import { CartComponent } from './components/cart/cart.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
