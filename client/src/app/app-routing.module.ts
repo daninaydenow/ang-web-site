@@ -4,9 +4,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { AuthGuard } from './guards/auth.guard';
 
 import { ProductsComponent } from './pages/products/products.component';
-import { SignInComponent } from './pages/sign-in/sign-in.component';
-import { SignOutComponent } from './pages/sign-out/sign-out.component';
-import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { SignInComponent } from './authentication/sign-in/sign-in.component';
+import { SignOutComponent } from './authentication/sign-out/sign-out.component';
+import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 
 const routes: Routes = [
   {

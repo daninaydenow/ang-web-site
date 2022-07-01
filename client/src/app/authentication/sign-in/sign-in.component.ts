@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserCredential } from '@angular/fire/auth';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from '../service/authentication.service';
 import { User } from 'src/app/models/User';
 
 @Component({
