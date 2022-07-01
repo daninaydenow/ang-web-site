@@ -16,11 +16,11 @@ export class CartService {
     if(alreadyExist === undefined) {
       product.quantity = 1;
       product.totalProductPrice = product.price;
-      this.cart.push(product)
+      this.cart.push(product);
     }
     if(alreadyExist) {
-      alreadyExist.quantity += 1;
-      alreadyExist.totalProductPrice = (alreadyExist.quantity * Number(alreadyExist.price)).toFixed(2);
+    alreadyExist.quantity += 1;
+    alreadyExist.totalProductPrice = (alreadyExist.quantity * Number(alreadyExist.price)).toFixed(2);
     const index = this.cart.indexOf(alreadyExist);
     this.cart.splice(index, 1, alreadyExist);
     }
@@ -38,15 +38,17 @@ export class CartService {
     const index = this.cart.indexOf(product);
     this.cart[index].quantity++
     this.cart[index].totalProductPrice = (this.cart[index].quantity * Number(this.cart[index].price)).toFixed(2);
+    
   }
 
   decrement(product: Product): void {
     const index = this.cart.indexOf(product);
     if(this.cart[index].quantity === 1) {
-      return;
+      return
     }
     this.cart[index].quantity--;
     this.cart[index].totalProductPrice = (this.cart[index].quantity * Number(this.cart[index].price)).toFixed(2);
+    
   }
   getTotalPrice(): string {
     let totalPrice: number = 0;

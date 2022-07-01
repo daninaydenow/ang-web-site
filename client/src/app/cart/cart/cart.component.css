@@ -28,6 +28,6 @@ img {
     width: 150px;
 }
 
-td {
-    padding: 10px;
+td, th {
+    margin-inline: 10px;
 }
