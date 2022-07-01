@@ -10,7 +10,7 @@ import { CartService } from '../service/cart.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  displayedColumns: string[] = ['Name', 'Image', 'Description', 'Price', 'Action'];
+  displayedColumns: string[] = ['Name', 'Image', 'Description', 'Quantity', 'Price', 'Action'];
   dataSource = new MatTableDataSource<Product>([]);
   constructor(private cartService: CartService) { 
     this.cartService.cartList$.subscribe(res => {
@@ -28,6 +28,14 @@ export class CartComponent implements OnInit {
 
   removeItemFromCart(product: Product): void {
     this.cartService.removeFromCart(product)
+  }
+
+  incrementItemQuantity(product: Product): void {
+    this.cartService.increment(product);
+  }
+
+  decrementItemQuantity(product: Product): void {
+    this.cartService.decrement(product);
   }
   
   applyFilter(event: Event) {

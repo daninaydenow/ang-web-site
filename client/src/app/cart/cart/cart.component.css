@@ -16,6 +16,11 @@ table {
   margin-top: 10px;
 }
 
+.quantity {
+  text-align: center;
+}
+
+
 img {
     object-fit: contain;
     height: 200px;
