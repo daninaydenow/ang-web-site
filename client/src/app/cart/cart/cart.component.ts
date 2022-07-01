@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import { Product } from 'src/app/models/Product';
-import { CartService } from 'src/app/services/cart.service';
+import { CartService } from '../service/cart.service';
 
 
 @Component({

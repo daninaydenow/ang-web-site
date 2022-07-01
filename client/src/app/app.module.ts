@@ -6,13 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AuthModule } from './authentication/auth.module';
+import { CartModule } from './cart/cart.module';
 import { SharedModule } from './shared/shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ItemComponent } from './components/item/item.component';
-import { CartComponent } from './components/cart/cart.component';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -25,7 +25,6 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     NavbarComponent,
     ProductsComponent,
     ItemComponent,
-    CartComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +32,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     AppRoutingModule,
     HttpClientModule,
     AuthModule,
+    CartModule,
     SharedModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),

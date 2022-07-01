@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CartComponent } from './components/cart/cart.component';
 import { AuthGuard } from './guards/auth.guard';
 
+import { CartComponent } from './cart/cart/cart.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { SignOutComponent } from './authentication/sign-out/sign-out.component';

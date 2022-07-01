@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/User';
 import { AuthenticationService } from '../../authentication/service/authentication.service';
-import { CartService } from 'src/app/services/cart.service';
+import { CartService } from '../../cart/service/cart.service';
 
 @Component({
   selector: 'app-navbar',
