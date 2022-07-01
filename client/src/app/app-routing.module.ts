@@ -27,7 +27,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'my-cart', 
-    component: CartComponent}
+    component: CartComponent,
+    canActivate: [AuthGuard]}
 ];
 
 @NgModule({
