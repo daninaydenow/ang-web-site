@@ -42,6 +42,9 @@ export class CartService {
 
   decrement(product: Product): void {
     const index = this.cart.indexOf(product);
+    if(this.cart[index].quantity === 1) {
+      return;
+    }
     this.cart[index].quantity--;
     this.cart[index].totalProductPrice = (this.cart[index].quantity * Number(this.cart[index].price)).toFixed(2);
   }
