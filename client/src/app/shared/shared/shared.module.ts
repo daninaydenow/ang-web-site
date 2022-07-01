@@ -27,7 +27,6 @@ import {MatTableModule} from '@angular/material/table';
     MatTableModule
   ],
   exports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
