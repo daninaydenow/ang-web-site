@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component} from '@angular/core';
+import { Observable} from 'rxjs';
+import { Product } from 'src/app/models/Product';
 import { User } from 'src/app/models/User';
 import { AuthenticationService } from '../../authentication/service/authentication.service';
 import { CartService } from '../../cart/service/cart.service';
@@ -9,23 +10,11 @@ import { CartService } from '../../cart/service/cart.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit, OnDestroy {
-  user!: User;
-  subscribtion!: Subscription;
-  cartItemsCount!: number;
+export class NavbarComponent {
+  public user$!: Observable<User>;
+  public cartItems$!: Observable<Product[]>;
   constructor(private authService: AuthenticationService, private cartService: CartService) {
-    this.subscribtion = this.authService.user$.subscribe((user) => {
-      this.user = user;
-    });
-
-    this.cartService.cartList$.subscribe(res => {
-      this.cartItemsCount = res.length;
-    })
-  }
-
-  ngOnInit(): void {}
-
-  ngOnDestroy(): void {
-    this.subscribtion.unsubscribe();
+    this.user$ = this.authService.user$;
+    this.cartItems$ = this.cartService.cartList$;
   }
 }

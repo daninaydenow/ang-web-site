@@ -1,37 +1,20 @@
 <mat-toolbar color="primary">
   <a routerLink="/" style="text-decoration: none; color: white">Products</a>
   <span class="example-spacer"></span>
-  <!-- Guest buttons -->
-  <a
-    *ngIf="!user"
-    mat-icon-button
-    class="example-icon login-icon"
-    aria-label="Icon-button with login icon"
-    routerLink="/sign-in"
-  >
-    <mat-icon>login</mat-icon>
-  </a>
-  <a
-    *ngIf="!user"
-    mat-icon-button
-    class="example-icon person_add-icon"
-    aria-label="Icon-button with person_add icon"
-    routerLink="/sign-up"
-  >
-    <mat-icon>person_add</mat-icon>
-  </a>
   <!-- Logged in buttons -->
-  <a
-    *ngIf="user"
+  <ng-container *ngIf="user$ | async; else noUser">
+    <a
     mat-icon-button
     class="example-icon cart"
     aria-label="Icon-button with cart"
     routerLink="/my-cart"
   >
-    <mat-icon matBadge="{{cartItemsCount}}" matBadgeColor="warn">shopping_cart</mat-icon>
+  <ng-container *ngIf="cartItems$ | async as cart">
+    <mat-icon matBadge={{cart?.length}} matBadgeColor="warn">shopping_cart</mat-icon>
+  </ng-container>
+      
   </a>
   <a
-    *ngIf="user"
     mat-icon-button
     class="example-icon logout"
     aria-label="Icon-button with logout"
@@ -39,4 +22,26 @@
   >
     <mat-icon>logout</mat-icon>
   </a>
+  </ng-container>
+  
 </mat-toolbar>
+
+<!-- Guest buttons -->
+<ng-template #noUser>
+  <a
+  mat-icon-button
+  class="example-icon login-icon"
+  aria-label="Icon-button with login icon"
+  routerLink="/sign-in"
+>
+  <mat-icon>login</mat-icon>
+</a>
+<a
+  mat-icon-button
+  class="example-icon person_add-icon"
+  aria-label="Icon-button with person_add icon"
+  routerLink="/sign-up"
+>
+  <mat-icon>person_add</mat-icon>
+</a>
+</ng-template>

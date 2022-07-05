@@ -29,30 +29,37 @@ export class CartService {
   }
 
   removeFromCart(product: Product): void {
-    const index = this.cart.indexOf(product);
-    this.cart.splice(index, 1);
+    this.cart = this.cart.filter(obj => obj !== product);
     this.cartSource.next(this.cart);
   }
 
   increment(product: Product): void {
-    const index = this.cart.indexOf(product);
-    this.cart[index].quantity++
-    this.cart[index].totalProductPrice = (this.cart[index].quantity * Number(this.cart[index].price)).toFixed(2);
-    
+    const newCart = this.cart.map(x => {
+      if(x.id === product.id) {
+         return {...x, quantity: x.quantity += 1 , totalProductPrice: (x.quantity * Number(x.price)).toFixed(2)};
+      }
+      return x;
+    });
+    this.cartSource.next(newCart);
+    this.cart = [...newCart];
   }
 
   decrement(product: Product): void {
-    const index = this.cart.indexOf(product);
-    if(this.cart[index].quantity === 1) {
-      return
-    }
-    this.cart[index].quantity--;
-    this.cart[index].totalProductPrice = (this.cart[index].quantity * Number(this.cart[index].price)).toFixed(2);
-    
+    const newCart = this.cart.map(x => {
+      if(x.id === product.id) {
+        if(x.quantity === 1) {
+          return x;
+        }
+        return {...x, quantity: x.quantity -= 1, totalProductPrice: (x.quantity * Number(x.price)).toFixed(2)};
+      }
+      return x;
+    });
+    this.cartSource.next(newCart);
+    this.cart = [...newCart];
   }
   getTotalPrice(): string {
     let totalPrice: number = 0;
-    this.cart.forEach(x => totalPrice += Number(x.totalProductPrice))
+    this.cart.map(x => totalPrice += Number(x.totalProductPrice))
     return totalPrice.toFixed(2);
   }
   
