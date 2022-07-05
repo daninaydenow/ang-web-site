@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserCredential } from '@angular/fire/auth';
 
@@ -11,7 +11,7 @@ import { User } from 'src/app/models/User';
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css'],
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent {
   constructor(
     private authService: AuthenticationService,
     private router: Router
@@ -19,8 +19,6 @@ export class SignInComponent implements OnInit {
     // clear local storage on initialization
     localStorage.clear();
   }
-
-  ngOnInit(): void {}
 
   // create form model with needed controls
   form = new FormGroup({

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserCredential } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { AuthenticationService } from '../service/authentication.service';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
   constructor(
     private authService: AuthenticationService,
     private router: Router
@@ -23,8 +23,6 @@ export class SignUpComponent implements OnInit {
     password: new FormControl('', Validators.required),
     rePassword: new FormControl('', Validators.required),
   });
-
-  ngOnInit(): void {}
 
   onSubmit() {
     // Check for passwords missmatch

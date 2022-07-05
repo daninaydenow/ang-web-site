@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {  Observable } from 'rxjs';
 import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/services/product.service';
@@ -8,13 +8,11 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent {
   public products$!: Observable<Product[]>;
   constructor(
     private productService: ProductService
   ) {
     this.products$ = this.productService.getAllProducts();
   }
-
-  ngOnInit(): void {}
 }

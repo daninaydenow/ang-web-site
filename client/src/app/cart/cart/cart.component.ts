@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import { Product } from 'src/app/models/Product';
 import { CartService } from '../service/cart.service';
@@ -9,7 +9,7 @@ import { CartService } from '../service/cart.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartComponent {
   displayedColumns: string[] = ['Name', 'Image', 'Description', 'Quantity', 'Price', 'Action'];
   dataSource = new MatTableDataSource<Product>([]);
   constructor(private cartService: CartService) { 
@@ -17,10 +17,6 @@ export class CartComponent implements OnInit {
       this.dataSource.data = res;
     })
    }
-
-  ngOnInit(): void {
-    
-  }
 
   getCartTotal(): string {
     return this.cartService.getTotalPrice();
