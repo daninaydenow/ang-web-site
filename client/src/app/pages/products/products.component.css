@@ -9,3 +9,12 @@
   margin: 15px;
   padding: 0;
 }
+
+header {
+  text-align: center;
+}
+
+.search-field {
+  margin: 10px;
+  width: 50%;
+}

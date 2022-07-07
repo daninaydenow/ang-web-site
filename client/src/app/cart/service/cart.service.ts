@@ -14,8 +14,6 @@ export class CartService {
   addToCart(product: Product): void {
     const alreadyExist = this.cart.find(x => product.title === x.title);
     if(alreadyExist === undefined) {
-      product.quantity = 1;
-      product.totalProductPrice = product.price;
       this.cart.push(product);
     }
     if(alreadyExist) {
