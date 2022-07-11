@@ -15,6 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
      return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
+        // Handle error if client side connection is problematic
         if(error.status === 0) {
           this.snackbar.open('Oops ... There seems to be a network problem !', 'close', {
             horizontalPosition: this.horizontalPosition,
@@ -22,6 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           })
           throw(error);
         }
+        // Handle error returned from the back end
         this.snackbar.open(error.message, 'close', {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
