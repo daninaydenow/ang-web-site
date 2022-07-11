@@ -28,8 +28,8 @@ export class ProductService {
 
   getProductsFromTwoCalls(): Observable<Product[]> {
     return forkJoin([
-      this.http.get(`${this.baseUrl}/productss`),
-      this.http.get('https://dummyjson.com/productss'),
+      this.http.get(`${this.baseUrl}/products`),
+      this.http.get('https://dummyjson.com/products'),
     ]).pipe(
       map(([firstApi, secondApi]: any) =>
         [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))

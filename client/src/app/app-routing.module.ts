@@ -9,6 +9,7 @@ import { SignOutComponent } from './authentication/sign-out/sign-out.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 
 const routes: Routes = [
+  {path: '**', redirectTo: '', component: ProductsComponent},
   {
     path: 'sign-in',
     component: SignInComponent,
