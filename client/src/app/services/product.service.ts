@@ -38,7 +38,7 @@ export class ProductService {
   }
 
   getSpecificCategory(category: string): Observable<Product[]> {
-    return forkJoin([
+    return zip([
       this.http.get(`${this.baseUrl}/products/category/${category}`),
       this.http.get(`https://dummyjson.com/products/category/${category}`),
     ]).pipe(
