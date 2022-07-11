@@ -10,6 +10,7 @@ import {
   switchMap,
   zip,
   of,
+  BehaviorSubject,
 } from 'rxjs';
 import { Product } from '../models/Product';
 
@@ -17,17 +18,29 @@ import { Product } from '../models/Product';
   providedIn: 'root',
 })
 export class ProductService {
-  baseUrl: string = 'https://fakestoreapi.com';
+  private baseUrl: string = 'https://fakestoreapi.com';
+  public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   constructor(private http: HttpClient) {}
 
-  getAllProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.baseUrl}/products`);
-  }
+  // getAllProducts(): Observable<Product[]> {
+  //   return this.http.get<Product[]>(`${this.baseUrl}/products`);
+  // }
 
   getProductsFromTwoCalls(): Observable<Product[]> {
     return forkJoin([
-      this.http.get(`${this.baseUrl}/products`),
-      this.http.get('https://dummyjson.com/products'),
+      this.http.get(`${this.baseUrl}/productss`),
+      this.http.get('https://dummyjson.com/productss'),
+    ]).pipe(
+      map(([firstApi, secondApi]: any) =>
+        [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
+      )
+    );
+  }
+
+  getSpecificCategory(category: string): Observable<Product[]> {
+    return forkJoin([
+      this.http.get(`${this.baseUrl}/products/category/${category}`),
+      this.http.get(`https://dummyjson.com/products/category/${category}`),
     ]).pipe(
       map(([firstApi, secondApi]: any) =>
         [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
@@ -37,7 +50,7 @@ export class ProductService {
 
   getSearchResult(searchInput: string) :Observable<Product[]>  {
     if(searchInput.length === 0) {
-      return of([]);
+      return this.getProductsFromTwoCalls();
     }
     return this.http
     .get<Product[]>(`https://dummyjson.com/products/search?q=${searchInput}`)
@@ -49,16 +62,16 @@ export class ProductService {
     ))
   }
 
-  getProductsFromTwoCallsZip(): Observable<Product[]> {
-    return zip(
-      this.http.get(`${this.baseUrl}/products`),
-      this.http.get('https://dummyjson.com/products')
-    ).pipe(
-      map(([firstApi, secondApi]: any) =>
-        [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
-      )
-    );
-  }
+  // getProductsFromTwoCallsZip(): Observable<Product[]> {
+  //   return zip(
+  //     this.http.get(`${this.baseUrl}/products`),
+  //     this.http.get('https://dummyjson.com/products')
+  //   ).pipe(
+  //     map(([firstApi, secondApi]: any) =>
+  //       [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
+  //     )
+  //   );
+  // }
 
   compileObject(x: any): any {
     return {

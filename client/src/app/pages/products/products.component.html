@@ -1,10 +1,15 @@
-<!-- <mat-grid-list cols="4" rowHeight="4:6">
-  <mat-grid-tile *ngFor="let product of products"
-    ><app-item [product]="product"></app-item
-  ></mat-grid-tile>
-</mat-grid-list> -->
-
+<mat-progress-bar *ngIf="isLoading$ | async" color="warn" mode="indeterminate"></mat-progress-bar>
 <header>
+  <div class="category-wrapper">
+    <ng-container *ngFor="let category of categorySelection">
+      <div class="btn-wrapper">
+        <button mat-icon-button (click)="getSpecificCategory(category.category)">
+          <mat-icon class="category-icons">{{category.icon}}</mat-icon>
+          <p>{{category.category}}</p>
+        </button>
+      </div>
+    </ng-container>
+  </div>
   <mat-form-field class="search-field">
     <input matInput type="search" placeholder="search..." #productSearchInput>
     <button class="search-btn" matSuffix mat-icon-button aria-label="Search" disabled="true">
@@ -13,8 +18,8 @@
   </mat-form-field>
 </header>
 
-  <div class="container">
-    <ng-container *ngFor="let product of products$ | async">
-      <app-item [product]="product" class="item"></app-item>
-    </ng-container>
-    </div>
+<div class="container">
+  <ng-container *ngFor="let product of products$ | async">
+    <app-item [product]="product" class="item"></app-item>
+  </ng-container>
+</div>

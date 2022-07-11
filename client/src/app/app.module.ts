@@ -13,11 +13,14 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ItemComponent } from './components/item/item.component';
+import { DemoDirective } from './directives/demo.directive';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+
+import { httpInterceptorProviders } from './app.interceptors';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     NavbarComponent,
     ProductsComponent,
     ItemComponent,
+    DemoDirective,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,9 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

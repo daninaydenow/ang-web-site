@@ -18,12 +18,28 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements AfterViewInit {
-  @ViewChild('productSearchInput', { static: true })
+  @ViewChild('productSearchInput', { static:true })
   productSearchInput!: ElementRef;
+  public isLoading$!: Observable<boolean>;
+  public categorySelection: any[] = [
+    { category: 'All Products', icon: 'apps' },
+    { category: 'Electronics', icon: 'devices' },
+    { category: 'Fashion', icon: 'styler' },
+    { category: 'Jewelery', icon: 'diamond' },
+    { category: 'Beauty', icon: 'local_florist' },
+  ];
   public products$!: Observable<Product[]>;
   public searchObs$!: Observable<string>;
   constructor(private productService: ProductService) {
     this.products$ = this.productService.getProductsFromTwoCalls();
+    this.isLoading$ = this.productService.isLoading;
+  }
+
+  getSpecificCategory(category: string) :any {
+     switch(category) {
+      case "All Products": return this.products$ = this.productService.getProductsFromTwoCalls(); 
+      default: return this.products$ = this.productService.getSpecificCategory(category.toLowerCase());
+     }
   }
 
   ngAfterViewInit(): void {
@@ -37,10 +53,11 @@ export class ProductsComponent implements AfterViewInit {
         this.productService
           .getSearchResult(searchText)
           .subscribe((searchResult: Product[]) => {
-            if(searchResult.length !== 0) {
-              return this.products$ = of(searchResult)
-            } else  {
-              return this.products$ = this.productService.getProductsFromTwoCalls();
+            if (searchResult.length !== 0) {
+              return (this.products$ = of(searchResult));
+            } else {
+              return (this.products$ =
+                this.productService.getProductsFromTwoCalls());
             }
           });
       });

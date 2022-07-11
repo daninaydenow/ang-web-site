@@ -1,6 +1,7 @@
 .example-card {
   width: 250px;
   height: 400px;
+  overflow: hidden;
 }
 
 .mat-card-image {
