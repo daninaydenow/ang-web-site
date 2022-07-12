@@ -11,15 +11,17 @@
     </ng-container>
   </div>
   <mat-form-field class="search-field">
-    <input matInput type="search" placeholder="search..." #productSearchInput>
+    <input matInput type="search" placeholder="search..." (keyup)="getSearchResults($event)" >
     <button class="search-btn" matSuffix mat-icon-button aria-label="Search" disabled="true">
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
 </header>
 
-<div class="container">
-  <ng-container *ngFor="let product of products$ | async">
-    <app-item [product]="product" class="item"></app-item>
-  </ng-container>
-</div>
+<ng-container *ngIf="products$ | async as products">
+  <div class="container">
+    <ng-container *ngFor="let product of products">
+      <app-item [product]="product" class="item"></app-item>
+    </ng-container>
+  </div>
+</ng-container>

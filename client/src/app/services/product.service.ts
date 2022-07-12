@@ -29,7 +29,8 @@ export class ProductService {
     ]).pipe(
       map(([firstApi, secondApi]: any) =>
         [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
-      )
+      ),
+      tap(() => this.isLoading.next(false))
     );
   }
 
@@ -40,7 +41,8 @@ export class ProductService {
     ]).pipe(
       map(([firstApi, secondApi]: any) =>
         [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
-      )
+      ),
+      tap(() => this.isLoading.next(false))
     );
   }
 
@@ -49,12 +51,13 @@ export class ProductService {
       return this.getProductsFromTwoCalls();
     }
     return forkJoin([
-      this.http.get(`https://dummyjson.com/products/search?q=${searchInput}`),
       this.http.get(`https://fakestoreapi.com/products/category/electronics`),
+      this.http.get(`https://dummyjson.com/products/search?q=${searchInput}`),
     ]).pipe(
-      map(([firstApi, secondApi]: any) =>
-        [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
-      )
+      map(([firstApi, secondApi]: any) =>{
+        return [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
+    }),
+    tap(() => this.isLoading.next(false))
     );
   }
 

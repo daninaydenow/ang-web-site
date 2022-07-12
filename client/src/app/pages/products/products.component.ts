@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import {
   debounceTime,
   distinctUntilChanged,
+  from,
   fromEvent,
   map,
   Observable,
@@ -17,10 +18,9 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
-export class ProductsComponent implements AfterViewInit {
-  @ViewChild('productSearchInput', { static:true })
-  productSearchInput!: ElementRef;
+export class ProductsComponent {
   public isLoading$!: Observable<boolean>;
+  public products$!: Observable<Product[]>;
   public categorySelection: any[] = [
     { category: 'All Products', icon: 'apps' },
     { category: 'Electronics', icon: 'devices' },
@@ -28,12 +28,9 @@ export class ProductsComponent implements AfterViewInit {
     { category: 'Jewelery', icon: 'diamond' },
     { category: 'Beauty', icon: 'local_florist' },
   ];
-  public products$!: Observable<Product[]>;
-  public searchObs$!: Observable<string>;
   constructor(private productService: ProductService) {
     this.isLoading$ = this.productService.isLoading;
     this.products$ = this.productService.getProductsFromTwoCalls();
-    this.products$.pipe(tap(console.log))
   }
 
   getSpecificCategory(category: string) :any {
@@ -43,22 +40,13 @@ export class ProductsComponent implements AfterViewInit {
      }
   }
 
-
-  ngAfterViewInit(): void {
-    const searchObs = fromEvent(this.productSearchInput.nativeElement, 'keyup')
-      .pipe(
-        map((event: any) => event.target.value.trim()),
-        debounceTime(1000),
-        distinctUntilChanged(),
-        switchMap((text: string) => text),
-        tap(console.log)
-      ).subscribe()
-      // .subscribe((searchText: string) => {
-      //   this.productService
-      //     .getSearchResult(searchText)
-      //     .subscribe((result: Product[]) => {
-      //      this.products$ = of(result);
-      //     });
-      // });
+  getSearchResults(event: any) :void {
+    this.products$ = of(event.target.value)
+    .pipe(
+      map((value: string) => value.trim()),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((text: string) => this.productService.getSearchResult(text)),
+    )
   }
 }
