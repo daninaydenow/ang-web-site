@@ -22,10 +22,6 @@ export class ProductService {
   public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   constructor(private http: HttpClient) {}
 
-  // getAllProducts(): Observable<Product[]> {
-  //   return this.http.get<Product[]>(`${this.baseUrl}/products`);
-  // }
-
   getProductsFromTwoCalls(): Observable<Product[]> {
     return forkJoin([
       this.http.get(`${this.baseUrl}/products`),
@@ -52,26 +48,15 @@ export class ProductService {
     if(searchInput.length === 0) {
       return this.getProductsFromTwoCalls();
     }
-    return this.http
-    .get<Product[]>(`https://dummyjson.com/products/search?q=${searchInput}`)
-    .pipe(switchMap((firstApi: any) => 
-               this.http.get('https://fakestoreapi.com/products/category/electronics')
-              .pipe(map((secondApi: any) => {
-                  return [...firstApi.products, ...secondApi].map((x: Product | any) => this.compileObject(x))
-              }))
-    ))
+    return forkJoin([
+      this.http.get(`https://dummyjson.com/products/search?q=${searchInput}`),
+      this.http.get(`https://fakestoreapi.com/products/category/electronics`),
+    ]).pipe(
+      map(([firstApi, secondApi]: any) =>
+        [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
+      )
+    );
   }
-
-  // getProductsFromTwoCallsZip(): Observable<Product[]> {
-  //   return zip(
-  //     this.http.get(`${this.baseUrl}/products`),
-  //     this.http.get('https://dummyjson.com/products')
-  //   ).pipe(
-  //     map(([firstApi, secondApi]: any) =>
-  //       [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
-  //     )
-  //   );
-  // }
 
   compileObject(x: any): any {
     return {

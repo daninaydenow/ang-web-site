@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -6,6 +6,8 @@ import {
   map,
   Observable,
   of,
+  switchMap,
+  tap,
 } from 'rxjs';
 import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/services/product.service';
@@ -29,8 +31,9 @@ export class ProductsComponent implements AfterViewInit {
   public products$!: Observable<Product[]>;
   public searchObs$!: Observable<string>;
   constructor(private productService: ProductService) {
-    this.products$ = this.productService.getProductsFromTwoCalls();
     this.isLoading$ = this.productService.isLoading;
+    this.products$ = this.productService.getProductsFromTwoCalls();
+    this.products$.pipe(tap(console.log))
   }
 
   getSpecificCategory(category: string) :any {
@@ -40,19 +43,22 @@ export class ProductsComponent implements AfterViewInit {
      }
   }
 
+
   ngAfterViewInit(): void {
-    fromEvent(this.productSearchInput.nativeElement, 'keyup')
+    const searchObs = fromEvent(this.productSearchInput.nativeElement, 'keyup')
       .pipe(
         map((event: any) => event.target.value.trim()),
         debounceTime(1000),
-        distinctUntilChanged()
-      )
-      .subscribe((searchText: string) => {
-        this.productService
-          .getSearchResult(searchText)
-          .subscribe((result: Product[]) => {
-           this.products$ = of(result);
-          });
-      });
+        distinctUntilChanged(),
+        switchMap((text: string) => text),
+        tap(console.log)
+      ).subscribe()
+      // .subscribe((searchText: string) => {
+      //   this.productService
+      //     .getSearchResult(searchText)
+      //     .subscribe((result: Product[]) => {
+      //      this.products$ = of(result);
+      //     });
+      // });
   }
 }

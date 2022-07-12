@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { finalize, Observable } from 'rxjs';
+import { delay, finalize, Observable, tap } from 'rxjs';
 import { ProductService } from '../services/product.service';
 
 @Injectable({
@@ -10,6 +10,7 @@ export class LoadingInterceptor implements HttpInterceptor{
 
   constructor(private productService: ProductService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    
     this.productService.isLoading.next(true);
     
     return next.handle(req).pipe(

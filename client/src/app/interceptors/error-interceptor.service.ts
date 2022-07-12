@@ -1,7 +1,7 @@
 import {  HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { catchError, Observable } from 'rxjs';
+import { catchError, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,11 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor(private snackbar: MatSnackBar) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-     return next.handle(req).pipe(
+    return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         // Handle error if client side connection is problematic
         if(error.status === 0) {
-          this.snackbar.open('Oops ... There seems to be a network problem !', 'close', {
+          this.snackbar.open('Oops ... Something went wrong !', 'close', {
             horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
           })
