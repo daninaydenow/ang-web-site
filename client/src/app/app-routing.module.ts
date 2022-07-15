@@ -9,7 +9,6 @@ import { SignOutComponent } from './authentication/sign-out/sign-out.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 
 const routes: Routes = [
-  {path: '**', redirectTo: '', component: ProductsComponent},
   {
     path: 'sign-in',
     component: SignInComponent,
@@ -28,9 +27,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'my-cart', 
-    component: CartComponent,
-    canActivate: [AuthGuard]
-  },
+  component: CartComponent,
+  canActivate: [AuthGuard]
+},
+{path: '**', redirectTo: '', component: ProductsComponent},
 ];
 
 @NgModule({
