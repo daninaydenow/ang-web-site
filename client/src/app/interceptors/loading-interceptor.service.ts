@@ -30,7 +30,11 @@ export class LoadingInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.productService.isLoading.next(true);
+    // wait one tick for change detection...
+    setTimeout(() => {
+      this.productService.isLoading.next(true);
+    }, 0);
+
     return next.handle(req).pipe(
       map((res) => {
         if (res instanceof HttpResponse) {
