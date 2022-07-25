@@ -1,4 +1,13 @@
-import { Component, Input } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  DoCheck,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { CartService } from '../../cart/service/cart.service';
 
@@ -8,10 +17,10 @@ import { CartService } from '../../cart/service/cart.service';
   styleUrls: ['./item.component.css'],
 })
 export class ItemComponent {
-  @Input() product!: Product;
+  @Input() products!: Product[];
   constructor(private cartService: CartService) {}
 
   addToCart(product: Product) {
-  this.cartService.addToCart(product);
+    this.cartService.addToCart(product);
   }
 }

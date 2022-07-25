@@ -1,27 +1,41 @@
-<mat-progress-bar *ngIf="isLoading$ | async" color="warn" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar
+  *ngIf="isLoading$ | async"
+  color="warn"
+  mode="indeterminate"
+></mat-progress-bar>
 <header>
   <div class="category-wrapper">
     <ng-container *ngFor="let category of categorySelection">
       <div class="btn-wrapper">
-        <button mat-icon-button (click)="getSpecificCategory(category.category)">
-          <mat-icon class="category-icons">{{category.icon}}</mat-icon>
-          <p>{{category.category}}</p>
+        <button
+          mat-icon-button
+          (click)="getSpecificCategory(category.category)"
+        >
+          <mat-icon class="category-icons">{{ category.icon }}</mat-icon>
+          <p>{{ category.category }}</p>
         </button>
       </div>
     </ng-container>
   </div>
   <mat-form-field class="search-field">
-    <input matInput type="search" placeholder="search..." (keyup)="getSearchResults($event)" >
-    <button class="search-btn" matSuffix mat-icon-button aria-label="Search" disabled="true">
+    <input
+      matInput
+      type="search"
+      placeholder="search..."
+      (keyup)="getSearchResults($event)"
+    />
+    <button
+      class="search-btn"
+      matSuffix
+      mat-icon-button
+      aria-label="Search"
+      disabled="true"
+    >
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
 </header>
 
 <ng-container *ngIf="products$ | async as products">
-  <div class="container">
-    <ng-container *ngFor="let product of products">
-      <app-item [product]="product" class="item"></app-item>
-    </ng-container>
-  </div>
+  <app-item [products]="products" class="item-container"></app-item>
 </ng-container>

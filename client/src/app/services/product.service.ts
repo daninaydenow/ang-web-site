@@ -19,7 +19,9 @@ import { Product } from '../models/Product';
 })
 export class ProductService {
   private baseUrl: string = 'https://fakestoreapi.com';
-  public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
   constructor(private http: HttpClient) {}
 
   getProductsFromTwoCalls(): Observable<Product[]> {
@@ -28,36 +30,39 @@ export class ProductService {
       this.http.get('https://dummyjson.com/products'),
     ]).pipe(
       map(([firstApi, secondApi]: any) =>
-        [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
-      ),
-      tap(() => this.isLoading.next(false))
+        [...firstApi, ...secondApi.products].map((x: Product | any) =>
+          this.compileObject(x)
+        )
+      )
     );
   }
 
   getSpecificCategory(category: string): Observable<Product[]> {
-    return zip([
+    return forkJoin([
       this.http.get(`${this.baseUrl}/products/category/${category}`),
       this.http.get(`https://dummyjson.com/products/category/${category}`),
     ]).pipe(
       map(([firstApi, secondApi]: any) =>
-        [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
-      ),
-      tap(() => this.isLoading.next(false))
+        [...firstApi, ...secondApi.products].map((x: Product | any) =>
+          this.compileObject(x)
+        )
+      )
     );
   }
 
-  getSearchResult(searchInput: string) :Observable<Product[]>  {
-    if(searchInput.length === 0) {
+  getSearchResult(searchInput: string): Observable<Product[]> {
+    if (searchInput.length === 0) {
       return this.getProductsFromTwoCalls();
     }
     return forkJoin([
       this.http.get(`https://fakestoreapi.com/products/category/electronics`),
       this.http.get(`https://dummyjson.com/products/search?q=${searchInput}`),
     ]).pipe(
-      map(([firstApi, secondApi]: any) =>{
-        return [...firstApi, ...secondApi.products].map((x: Product | any) => this.compileObject(x))
-    }),
-    tap(() => this.isLoading.next(false))
+      map(([firstApi, secondApi]: any) => {
+        return [...firstApi, ...secondApi.products].map((x: Product | any) =>
+          this.compileObject(x)
+        );
+      })
     );
   }
 

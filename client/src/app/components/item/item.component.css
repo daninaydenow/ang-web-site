@@ -2,6 +2,7 @@
   width: 250px;
   height: 400px;
   overflow: hidden;
+  margin: 1rem;
 }
 
 .mat-card-image {
