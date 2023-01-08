@@ -13,7 +13,7 @@ export class CartComponent {
   displayedColumns: string[] = ['Name', 'Image', 'Description', 'Quantity', 'Price', 'Action'];
   dataSource = new MatTableDataSource<Product>([]);
   constructor(private cartService: CartService) { 
-    this.cartService.cartList$.subscribe(res => {
+    this.cartService.getCartList().subscribe(res => {
       this.dataSource.data = res;
     })
    }

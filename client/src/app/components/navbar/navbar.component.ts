@@ -14,7 +14,7 @@ export class NavbarComponent {
   public user$!: Observable<User>;
   public cartItems$!: Observable<Product[]>;
   constructor(private authService: AuthenticationService, private cartService: CartService) {
-    this.user$ = this.authService.user$;
-    this.cartItems$ = this.cartService.cartList$;
+    this.user$ = this.authService.getUser();
+    this.cartItems$ = this.cartService.getCartList();
   }
 }

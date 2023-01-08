@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../../models/Product';
 
 @Injectable({
@@ -7,13 +7,17 @@ import { Product } from '../../models/Product';
 })
 export class CartService {
   private cart: Product[] = [];
-  private cartSource = new BehaviorSubject<Product[]>(this.cart)
-  cartList$ = this.cartSource.asObservable();
+  private cartSource = new BehaviorSubject<Product[]>(this.cart);
+
   constructor() { }
+
+  getCartList(): Observable<Product[]> {
+    return this.cartSource.asObservable();
+  }
 
   addToCart(product: Product): void {
     const alreadyExist = this.cart.find(x => product.title === x.title);
-    if(alreadyExist === undefined) {
+    if(!alreadyExist) {
       this.cart.push(product);
     }
     if(alreadyExist) {
@@ -34,7 +38,10 @@ export class CartService {
   increment(product: Product): void {
     const newCart = this.cart.map(x => {
       if(x.id === product.id) {
-         return {...x, quantity: x.quantity += 1 , totalProductPrice: (x.quantity * Number(x.price)).toFixed(2)};
+         return {...x, 
+         quantity: x.quantity += 1, 
+         totalProductPrice: (x.quantity * Number(x.price)).toFixed(2)
+         };
       }
       return x;
     });
@@ -48,17 +55,19 @@ export class CartService {
         if(x.quantity === 1) {
           return x;
         }
-        return {...x, quantity: x.quantity -= 1, totalProductPrice: (x.quantity * Number(x.price)).toFixed(2)};
+        return {...x, 
+          quantity: x.quantity -= 1, 
+          totalProductPrice: (x.quantity * Number(x.price)).toFixed(2)
+        };
       }
       return x;
     });
     this.cartSource.next(newCart);
     this.cart = [...newCart];
   }
+
   getTotalPrice(): string {
-    let totalPrice: number = 0;
-    this.cart.map(x => totalPrice += Number(x.totalProductPrice))
-    return totalPrice.toFixed(2);
+    return this.cart.reduce((acc: number, curr: Product) => acc + Number(curr.totalProductPrice) , 0).toFixed(2);
   }
   
 }
