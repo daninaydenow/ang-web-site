@@ -1,22 +1,15 @@
-<mat-progress-bar
-  *ngIf="isLoading$ | async"
-  color="warn"
-  mode="indeterminate"
-></mat-progress-bar>
 <header>
-  <div class="category-wrapper">
-    <ng-container *ngFor="let category of categorySelection">
-      <div class="btn-wrapper">
-        <button
-          mat-icon-button
-          (click)="getSpecificCategory(category.category)"
-        >
-          <mat-icon class="category-icons">{{ category.icon }}</mat-icon>
-          <p>{{ category.category }}</p>
-        </button>
-      </div>
-    </ng-container>
-  </div>
+  <ng-container *ngIf="categories$ | async as categories">
+    <mat-form-field>
+      <mat-label>Filter by category</mat-label>
+      <mat-select (selectionChange)="getSpecificCategories($event)">
+        <mat-option [value]="'none'">None</mat-option>
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
   <mat-form-field class="search-field">
     <input
       matInput

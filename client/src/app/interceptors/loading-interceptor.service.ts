@@ -24,7 +24,9 @@ export class LoadingInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     this.requests.push(req);
-    this.productService.setLoading(true);
+    setTimeout(() => {
+      this.productService.setLoading(true);
+    }, 0)
    
     return next.handle(req).pipe(
       finalize(() => {

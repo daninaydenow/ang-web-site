@@ -24,15 +24,21 @@ export class ProductService {
   }
 
   getAllProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.baseUrl}/products`).pipe(map((res: any) => res.products));
+    return this.http.get<Product[]>(`${this.baseUrl}/products?limit=0`).pipe(map((res: any) => res.products));
   }
 
   getProduct(id: number): Observable<Product> {
     return this.http.get<Product>(`${this.baseUrl}/products/${id}`);
   }
 
-  // Todo
+  getProductCategories(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/products/categories`);
+  }
+
   getSpecificCategory(category: string): Observable<Product[]> {
+    if(category === 'none') {
+      return this.getAllProducts();
+    }
     return this.http.get<Product[]>(`https://dummyjson.com/products/category/${category}`).pipe(map((res: any) => res.products));
   }
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,7 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AppRoutingModule } from 'src/app/app-routing.module';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatGridListModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSelectModule
   ],
   exports: [
     CommonModule,
@@ -55,7 +57,8 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatGridListModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSelectModule
   ]
 })
 export class SharedModule { }

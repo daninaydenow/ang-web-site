@@ -3,6 +3,7 @@ import {
   OnInit,
   OnDestroy
 } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -15,7 +16,7 @@ import {
   Subject
 } from 'rxjs';
 import { Product } from 'src/app/products/models/Product';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-products',
@@ -25,20 +26,16 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductsComponent implements OnInit, OnDestroy {
   private searchTerm$ = new Subject<string>();
   private destroy$ = new Subject<void>();
-  public isLoading$!: Observable<boolean>;
+ 
   public products$!: Observable<Product[]>;
-  public categorySelection: any[] = [
-    { category: 'All Products', icon: 'apps' },
-    { category: 'Electronics', icon: 'devices' },
-    { category: 'Fashion', icon: 'styler' },
-    { category: 'Jewelery', icon: 'diamond' },
-    { category: 'Beauty', icon: 'local_florist' },
-  ];
+  public categories$!: Observable<any>;
+
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.isLoading$ = this.productService.getLoading();
     this.products$ = this.productService.getAllProducts();
+    this.categories$ = this.productService.getProductCategories();
+
     this.searchTerm$.asObservable().pipe(
       takeUntil(this.destroy$),
       map((value: string) => value.trim()),
@@ -47,17 +44,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
       switchMap((text: string) => this.productService.getSearchResult(text)),
       tap((res: Product[]) => this.products$ = of(res))
     ).subscribe();
+
   }
 
-  getSpecificCategory(category: string): any {
-    switch (category) {
-      case 'All Products':
-        return (this.products$ = this.productService.getAllProducts());
-      default:
-        return (this.products$ = this.productService.getSpecificCategory(
-          category.toLowerCase()
-        ));
-    }
+  getSpecificCategories(event: MatSelectChange): void {
+    this.products$ = this.productService.getSpecificCategory(event.value);
   }
 
   getSearchResults(event: any): void {

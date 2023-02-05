@@ -1,2 +1,7 @@
 <app-navbar></app-navbar>
+<mat-progress-bar
+  *ngIf="isLoading$ | async"
+  color="warn"
+  mode="indeterminate"
+></mat-progress-bar>
 <router-outlet></router-outlet>

@@ -1,6 +1,6 @@
 <ng-container *ngFor="let product of products">
   <mat-card class="example-card">
-    <img mat-card-image [src]="product.thumbnail" alt="Photo of a Shiba Inu" />
+    <img mat-card-image [src]="product.thumbnail" alt="Photo of {{product.category}}" />
     <mat-card-content>
       <mat-card-title class="twenty-chars" matTooltip="{{product.title}}">{{ product.title }}</mat-card-title>
       <mat-card-subtitle>BGN: {{ product.price }}</mat-card-subtitle>

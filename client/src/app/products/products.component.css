@@ -1,16 +1,15 @@
 .item-container {
   width: 100%;
   display: flex;
-    align-content: flex-start;
-    flex-wrap: wrap;
+  align-content: flex-start;
+  flex-wrap: wrap;
 }
 
 header { 
-  width: 80%;
-  margin-left: 10%;
+  margin-top: 2rem;
+  margin-inline: 1rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-evenly;
 }
 
 .item {
@@ -20,7 +19,6 @@ header {
 
 .search-field {
   width: 50%;
-  padding: 0;
 }
 
 .category-icons {
