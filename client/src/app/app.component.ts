@@ -16,5 +16,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading$ = this.productService.getLoading();
   }
-  
+  // TODO: 
+  // Create a checkout page for cart
+  // Create a comment section underneath each product
+  // Create a profil page with personal information, shipping address, payment information and so on.
 }

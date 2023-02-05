@@ -4,8 +4,8 @@ import {switchMap, Observable, tap} from 'rxjs';
 import { CartService } from 'src/app/cart/service/cart.service';
 
 import { Product } from 'src/app/products/models/Product';
-
 import { ProductService } from 'src/app/services/product.service';
+
 
 @Component({
   selector: 'app-details',

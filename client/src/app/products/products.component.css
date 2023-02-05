@@ -1,5 +1,4 @@
 .item-container {
-  width: 100%;
   display: flex;
   align-content: flex-start;
   flex-wrap: wrap;
@@ -12,22 +11,8 @@ header {
   justify-content: space-evenly;
 }
 
-.item {
-  margin: 15px;
-  padding: 0;
-}
-
 .search-field {
   width: 50%;
-}
-
-.category-icons {
-  font-size: 48px;
-}
-
-.btn-wrapper {
-  text-align: center;
-  margin-inline: 25px;
 }
 
 .category-wrapper {

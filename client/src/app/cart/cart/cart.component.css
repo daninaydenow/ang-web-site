@@ -1,19 +1,23 @@
 .container {
-padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
 }
 
 /* Structure */
 table {
-    width: 100%;
-  }
+   width: 80%;
+}
   
-  .mat-form-field {
+.mat-form-field {
     font-size: 14px;
-    width: 100%;
-  }
+    width: 30%;
+}
 
-.mat-card {
-  margin-top: 10px;
+.mat-column-Description, .mat-column-Price, .mat-column-Quantity, .mat-column-Image {
+  padding-inline: 1rem !important;
 }
 
 .quantity {
@@ -32,7 +36,11 @@ td, th {
     margin-inline: 10px;
 }
 
-.total-price-container {
+.mat-card {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 78%;
+  margin-top: 10px;
+  padding: .75rem !important;
 }
