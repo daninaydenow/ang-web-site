@@ -1,24 +1,20 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
-  OnChanges,
   OnInit,
-  SimpleChanges,
-  ViewChild,
+  OnDestroy
 } from '@angular/core';
 import {
   debounceTime,
   distinctUntilChanged,
-  from,
-  fromEvent,
   map,
   Observable,
+  tap,
   of,
   switchMap,
-  tap,
+  takeUntil,
+  Subject
 } from 'rxjs';
-import { Product } from 'src/app/models/Product';
+import { Product } from 'src/app/products/models/Product';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -26,7 +22,9 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit, OnDestroy {
+  private searchTerm$ = new Subject<string>();
+  private destroy$ = new Subject<void>();
   public isLoading$!: Observable<boolean>;
   public products$!: Observable<Product[]>;
   public categorySelection: any[] = [
@@ -36,15 +34,25 @@ export class ProductsComponent {
     { category: 'Jewelery', icon: 'diamond' },
     { category: 'Beauty', icon: 'local_florist' },
   ];
-  constructor(private productService: ProductService) {
-    this.isLoading$ = this.productService.isLoading;
-    this.products$ = this.productService.getProductsFromTwoCalls();
+  constructor(private productService: ProductService) {}
+
+  ngOnInit(): void {
+    this.isLoading$ = this.productService.getLoading();
+    this.products$ = this.productService.getAllProducts();
+    this.searchTerm$.asObservable().pipe(
+      takeUntil(this.destroy$),
+      map((value: string) => value.trim()),
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap((text: string) => this.productService.getSearchResult(text)),
+      tap((res: Product[]) => this.products$ = of(res))
+    ).subscribe();
   }
 
   getSpecificCategory(category: string): any {
     switch (category) {
       case 'All Products':
-        return (this.products$ = this.productService.getProductsFromTwoCalls());
+        return (this.products$ = this.productService.getAllProducts());
       default:
         return (this.products$ = this.productService.getSpecificCategory(
           category.toLowerCase()
@@ -53,11 +61,10 @@ export class ProductsComponent {
   }
 
   getSearchResults(event: any): void {
-    this.products$ = of(event.target.value).pipe(
-      map((value: string) => value.trim()),
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((text: string) => this.productService.getSearchResult(text))
-    );
+    this.searchTerm$.next(event.target.value);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
   }
 }

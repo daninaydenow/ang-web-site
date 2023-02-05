@@ -3,20 +3,11 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  delay,
   finalize,
-  map,
-  merge,
-  mergeAll,
-  mergeMap,
   Observable,
-  of,
-  switchMap,
-  tap,
 } from 'rxjs';
 import { ProductService } from '../services/product.service';
 
@@ -24,28 +15,28 @@ import { ProductService } from '../services/product.service';
   providedIn: 'root',
 })
 export class LoadingInterceptor implements HttpInterceptor {
+  requests: HttpRequest<any>[] = [];
+
   constructor(private productService: ProductService) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // wait one tick for change detection...
-    setTimeout(() => {
-      this.productService.isLoading.next(true);
-    }, 0);
-
+    this.requests.push(req);
+    this.productService.setLoading(true);
+   
     return next.handle(req).pipe(
-      map((res) => {
-        if (res instanceof HttpResponse) {
-          if (res.status === 200) {
-            this.productService.isLoading.next(false);
-          } else {
-            this.productService.isLoading.next(true);
-          }
-        }
-        return res;
+      finalize(() => {
+         this.requests.shift();
+         if(this.isLastRequest()) {
+            return this.productService.setLoading(false);
+         }
       })
     );
+  }
+
+  isLastRequest(): boolean {
+     return this.requests.length <= 0;
   }
 }

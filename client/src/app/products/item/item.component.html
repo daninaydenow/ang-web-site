@@ -1,0 +1,17 @@
+<ng-container *ngFor="let product of products">
+  <mat-card class="example-card">
+    <img mat-card-image [src]="product.thumbnail" alt="Photo of a Shiba Inu" />
+    <mat-card-content>
+      <mat-card-title class="twenty-chars" matTooltip="{{product.title}}">{{ product.title }}</mat-card-title>
+      <mat-card-subtitle>BGN: {{ product.price }}</mat-card-subtitle>
+      <p class="thirty-chars">
+        {{ product.description }}
+      </p>
+      <mat-card-subtitle>rating: {{ product.rating }}</mat-card-subtitle>
+    </mat-card-content>
+    <mat-card-actions class="item-actions">
+      <button mat-stroked-button color="primary" (click)="addToCart(product)">Add to cart</button>
+      <a mat-stroked-button routerLink="/details/{{product.id}}">Details</a>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>

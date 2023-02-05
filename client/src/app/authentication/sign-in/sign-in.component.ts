@@ -4,7 +4,7 @@ import { UserCredential } from '@angular/fire/auth';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../service/authentication.service';
-import { User } from 'src/app/models/User';
+import { User } from 'src/app/authentication/models/User';
 
 @Component({
   selector: 'app-sign-in',

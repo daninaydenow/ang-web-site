@@ -8,10 +8,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
-import {MatTableModule} from '@angular/material/table';
-import {MatProgressBarModule} from '@angular/material/progress-bar'
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 
 
 @NgModule({
@@ -20,6 +23,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    AppRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -30,11 +34,15 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatTableModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatGridListModule,
+    MatTooltipModule
   ],
   exports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    AppRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -45,7 +53,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatTableModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatGridListModule,
+    MatTooltipModule
   ]
 })
 export class SharedModule { }

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Subject, takeUntil } from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
-import { Product } from 'src/app/models/Product';
+import { Product } from 'src/app/products/models/Product';
 import { CartService } from '../service/cart.service';
 
 
@@ -9,14 +10,22 @@ import { CartService } from '../service/cart.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent {
-  displayedColumns: string[] = ['Name', 'Image', 'Description', 'Quantity', 'Price', 'Action'];
-  dataSource = new MatTableDataSource<Product>([]);
-  constructor(private cartService: CartService) { 
-    this.cartService.getCartList().subscribe(res => {
-      this.dataSource.data = res;
-    })
-   }
+export class CartComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  public displayedColumns: string[] = ['Name', 'Image', 'Description', 'Quantity', 'Price', 'Action'];
+  public dataSource = new MatTableDataSource<Product>([]);
+
+  constructor(private cartService: CartService) {}
+  ngOnInit(): void {
+    this.cartService.getCartList().pipe(
+      takeUntil(this.destroy$)
+      ).subscribe(res => {
+        this.dataSource.data = res;
+      });
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
 
   getCartTotal(): string {
     return this.cartService.getTotalPrice();

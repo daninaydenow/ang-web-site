@@ -1,0 +1,26 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem;
+}
+
+.details-card {
+    width: 80%;
+}
+
+.card-main-image {
+    height: 40rem;
+    object-fit: contain;
+}
+
+.secondary-images {
+    object-fit: cover;
+}
+
+.secondary-images:hover {
+  object-fit:scale-down;
+}
+
+
+/* Secondary images styles are added to "styles.css" to access encapsulated mat-card styles and override them */

@@ -31,3 +31,8 @@ img {
 td, th {
     margin-inline: 10px;
 }
+
+.total-price-container {
+  display: flex;
+  justify-content: space-between;
+}

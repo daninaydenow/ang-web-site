@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Product } from '../../models/Product';
+import { Product } from '../../products/models/Product';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +18,11 @@ export class CartService {
   addToCart(product: Product): void {
     const alreadyExist = this.cart.find(x => product.title === x.title);
     if(!alreadyExist) {
-      this.cart.push(product);
+      this.cart.push({...product, quantity: 1, totalProductPrice: product.price});
     }
     if(alreadyExist) {
-    alreadyExist.quantity += 1;
-    alreadyExist.totalProductPrice = (alreadyExist.quantity * Number(alreadyExist.price)).toFixed(2);
+    alreadyExist.quantity! += 1;
+    alreadyExist.totalProductPrice = (alreadyExist.quantity! * Number(alreadyExist.price)).toFixed(2);
     const index = this.cart.indexOf(alreadyExist);
     this.cart.splice(index, 1, alreadyExist);
     }
@@ -39,8 +39,8 @@ export class CartService {
     const newCart = this.cart.map(x => {
       if(x.id === product.id) {
          return {...x, 
-         quantity: x.quantity += 1, 
-         totalProductPrice: (x.quantity * Number(x.price)).toFixed(2)
+         quantity: x.quantity! += 1, 
+         totalProductPrice: (x.quantity! * Number(x.price)).toFixed(2)
          };
       }
       return x;
@@ -56,8 +56,8 @@ export class CartService {
           return x;
         }
         return {...x, 
-          quantity: x.quantity -= 1, 
-          totalProductPrice: (x.quantity * Number(x.price)).toFixed(2)
+          quantity: x.quantity! -= 1, 
+          totalProductPrice: (x.quantity! * Number(x.price)).toFixed(2)
         };
       }
       return x;

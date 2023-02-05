@@ -1,14 +1,8 @@
 import {
-  AfterViewChecked,
-  AfterViewInit,
   Component,
-  DoCheck,
   Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
 } from '@angular/core';
-import { Product } from 'src/app/models/Product';
+import { Product } from 'src/app/products/models/Product';
 import { CartService } from '../../cart/service/cart.service';
 
 @Component({
