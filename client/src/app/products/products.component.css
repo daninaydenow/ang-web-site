@@ -37,9 +37,3 @@ header {
   min-height: 70px;
   margin-block: 10px;
 }
-
-.mat-progress-bar {
-  position: fixed;
-  width: 100%;
-  z-index: 99;
-}

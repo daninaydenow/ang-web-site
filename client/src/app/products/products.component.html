@@ -1,5 +1,5 @@
 <header>
-  <ng-container *ngIf="categories$ | async as categories">
+  <ng-container *ngIf="categories$ | async as categories; else emptyFilter">
     <mat-form-field>
       <mat-label>Filter by category</mat-label>
       <mat-select (selectionChange)="getSpecificCategories($event)">
@@ -32,3 +32,12 @@
 <ng-container *ngIf="products$ | async as products">
   <app-item [products]="products" class="item-container"></app-item>
 </ng-container>
+
+<ng-template #emptyFilter>
+  <mat-form-field>
+    <mat-label>Filter by category</mat-label>
+    <mat-select >
+      <mat-option ></mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
