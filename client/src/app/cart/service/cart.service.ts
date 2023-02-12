@@ -16,7 +16,7 @@ export class CartService {
   }
 
   addToCart(product: Product): void {
-    const alreadyExist = this.cart.find(x => product.title === x.title);
+    const alreadyExist = this.cart.find(x => product.id === x.id);
     if(!alreadyExist) {
       this.cart.push({...product, quantity: 1, totalProductPrice: product.price});
     }
@@ -26,7 +26,6 @@ export class CartService {
     const index = this.cart.indexOf(alreadyExist);
     this.cart.splice(index, 1, alreadyExist);
     }
-    
     this.cartSource.next(this.cart);
   }
 
@@ -36,7 +35,7 @@ export class CartService {
   }
 
   increment(product: Product): void {
-    const newCart = this.cart.map(x => {
+    this.cart = this.cart.map(x => {
       if(x.id === product.id) {
          return {...x, 
          quantity: x.quantity! += 1, 
@@ -45,12 +44,11 @@ export class CartService {
       }
       return x;
     });
-    this.cartSource.next(newCart);
-    this.cart = [...newCart];
+    this.cartSource.next(this.cart);
   }
 
   decrement(product: Product): void {
-    const newCart = this.cart.map(x => {
+    this.cart = this.cart.map(x => {
       if(x.id === product.id) {
         if(x.quantity === 1) {
           return x;
@@ -62,8 +60,7 @@ export class CartService {
       }
       return x;
     });
-    this.cartSource.next(newCart);
-    this.cart = [...newCart];
+    this.cartSource.next(this.cart);
   }
 
   getTotalPrice(): string {

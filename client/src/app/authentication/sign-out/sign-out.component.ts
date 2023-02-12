@@ -17,8 +17,6 @@ export class SignOutComponent {
       .then(() => {
         // clear local storage
         localStorage.clear();
-        // refresh user value
-        this.authService.getLocalStorageUser();
         // navigate to sign in page
         this.router.navigate(['/sign-in']);
       })

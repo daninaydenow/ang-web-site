@@ -23,12 +23,12 @@ export class AuthenticationService {
     return localStorage.getItem('user') ? true : false;
   }
 
-  getUser(): Observable<User> {
-    return this.userSource.asObservable();
+  setUser(user: User): void {
+    this.userSource.next(user);
   }
 
-  getLocalStorageUser() {
-    this.userSource.next(JSON.parse(localStorage.getItem('user')!));
+  getUser(): Observable<User> {
+    return this.userSource.asObservable();
   }
 
   signIn(email: string, password: string): Promise<UserCredential> {
