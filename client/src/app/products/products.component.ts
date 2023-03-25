@@ -3,7 +3,7 @@ import {
   OnInit,
   OnDestroy
 } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -24,35 +24,39 @@ import { ProductService } from '../services/product.service';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  private searchTerm$ = new Subject<string>();
   private destroy$ = new Subject<void>();
- 
+  
   public products$!: Observable<Product[]>;
   public categories$!: Observable<any>;
+  
+  public filtersForm: FormGroup = this.fb.group({
+    category: this.fb.control(''),
+    searchTerm: this.fb.control('')
+  })
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.products$ = this.productService.getAllProducts();
     this.categories$ = this.productService.getProductCategories();
+    
+    this.filtersForm.controls['category'].valueChanges.pipe(
+      takeUntil(this.destroy$),
+      switchMap((category: string) => this.productService.getSpecificCategory(category)),
+      tap((products: Product[]) => this.products$ = of(products))
+    )
+    .subscribe();
 
-    this.searchTerm$.asObservable().pipe(
+    this.filtersForm.controls['searchTerm'].valueChanges.pipe(
       takeUntil(this.destroy$),
       map((value: string) => value.trim()),
       debounceTime(500),
       distinctUntilChanged(),
       switchMap((text: string) => this.productService.getSearchResult(text)),
-      tap((res: Product[]) => this.products$ = of(res))
-    ).subscribe();
+      tap((products: Product[]) => this.products$ = of(products))
+    )
+    .subscribe();
 
-  }
-
-  getSpecificCategories(event: MatSelectChange): void {
-    this.products$ = this.productService.getSpecificCategory(event.value);
-  }
-
-  getSearchResults(event: any): void {
-    this.searchTerm$.next(event.target.value);
   }
 
   ngOnDestroy(): void {

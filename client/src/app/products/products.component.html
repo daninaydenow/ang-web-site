@@ -1,8 +1,10 @@
-<header>
+
+  <form [formGroup]="filtersForm">
+  <header>
   <ng-container *ngIf="categories$ | async as categories; else emptyFilter">
     <mat-form-field>
       <mat-label>Filter by category</mat-label>
-      <mat-select (selectionChange)="getSpecificCategories($event)">
+      <mat-select formControlName="category">
         <mat-option [value]="'none'">None</mat-option>
         <mat-option *ngFor="let category of categories" [value]="category">
           {{category}}
@@ -15,7 +17,7 @@
       matInput
       type="search"
       placeholder="search..."
-      (keyup)="getSearchResults($event)"
+      formControlName="searchTerm"
     />
     <button
       class="search-btn"
@@ -27,7 +29,9 @@
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
-</header>
+  </header>
+</form>
+
 
 <ng-container *ngIf="products$ | async as products">
   <app-item [products]="products" class="item-container"></app-item>
