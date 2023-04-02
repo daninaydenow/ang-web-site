@@ -8,6 +8,7 @@ import { SignOutComponent } from './authentication/sign-out/sign-out.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { DetailsComponent } from './products/details/details.component';
 import { ProductsComponent } from './products/products.component';
+import { CheckoutComponent } from './cart/checkout/checkout.component';
 
 const routes: Routes = [
   {
@@ -23,21 +24,22 @@ const routes: Routes = [
     component: SignUpComponent,
   },
   {
+    path: 'my-cart',
+    component: CartComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'details/:id', component: DetailsComponent },
+  {
     path: '',
     component: ProductsComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'my-cart', 
-    component: CartComponent,
-    canActivate: [AuthGuard]
-  },
-  { path: 'details/:id',
-    component: DetailsComponent
-  },
-  {path: '**',
-   redirectTo: '', 
-   component: ProductsComponent
-  }
+  { path: '**', redirectTo: '', component: ProductsComponent },
 ];
 
 @NgModule({

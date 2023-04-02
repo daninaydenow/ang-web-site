@@ -7,7 +7,6 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-
 }
 
 .mat-card-title-group {
@@ -15,4 +14,13 @@ body {
   flex-direction: column !important;
   padding-left: 3rem;
   gap: 5 px;
+}
+
+.mat-grid-tile > .mat-grid-tile-content {
+  display: block;
+  text-align: left;
+}
+
+.mat-grid-tile > .mat-grid-tile-content > p {
+  padding-inline: 10px;
 }

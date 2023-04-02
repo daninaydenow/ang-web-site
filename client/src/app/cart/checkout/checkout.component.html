@@ -1,0 +1,265 @@
+<mat-stepper #stepper>
+  <mat-step [stepControl]="userDataFormGroup">
+    <form [formGroup]="userDataFormGroup">
+      <ng-template matStepLabel>Details</ng-template>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input
+            name="name"
+            type="text"
+            matInput
+            placeholder="First name, Last name"
+            formControlName="name"
+            required
+          />
+          <mat-icon matSuffix fontSet="material-icons-outlined">badge</mat-icon>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input
+            name="phoneNumber"
+            type="text"
+            matInput
+            placeholder="08********"
+            formControlName="phoneNumber"
+            required
+          />
+          <mat-icon matSuffix fontSet="material-icons-outlined"
+            >phone_android</mat-icon
+          >
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            name="email"
+            type="text"
+            matInput
+            placeholder="abc@gmail.com"
+            formControlName="email"
+            required
+          />
+          <mat-icon matSuffix fontSet="material-icons-outlined">email</mat-icon>
+        </mat-form-field>
+      </p>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="userAdressFormGroup" label="Adress">
+    <form [formGroup]="userAdressFormGroup">
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Country</mat-label>
+          <input
+            name="country"
+            type="text"
+            matInput
+            placeholder="Bulgaria, France, UK etc..."
+            formControlName="country"
+            required
+          />
+          <mat-icon matSuffix fontSet="material-icons-outlined"
+            >language</mat-icon
+          >
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>City</mat-label>
+          <input
+            name="city"
+            type="text"
+            matInput
+            placeholder="Sofia, Paris, London etc..."
+            formControlName="city"
+            required
+          />
+          <mat-icon matSuffix fontSet="material-icons-outlined"
+            >location_city</mat-icon
+          >
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Street</mat-label>
+          <input
+            name="street"
+            type="text"
+            matInput
+            placeholder="First street"
+            formControlName="street"
+            required
+          />
+          <mat-icon matSuffix fontSet="material-icons-outlined"
+            >signpost</mat-icon
+          >
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Street Number</mat-label>
+          <input
+            name="streetNumber"
+            type="text"
+            matInput
+            placeholder="10"
+            formControlName="streetNumber"
+            required
+          />
+          <mat-icon matSuffix fontSet="material-icons-outlined"
+            >numbers</mat-icon
+          >
+        </mat-form-field>
+      </p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="paymentFormGroup">
+    <ng-template matStepLabel>Payment</ng-template>
+    <form [formGroup]="paymentFormGroup">
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Card Number</mat-label>
+          <input
+            matInput
+            name="cardNumber"
+            type="text"
+            placeholder="1111-2222-3333-4444"
+            autocomplete="cc-number"
+            formControlName="cardNumber"
+            required
+          />
+          <mat-icon matSuffix>credit_card</mat-icon>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Expiration Date</mat-label>
+          <input
+            name="expirationDate"
+            type="text"
+            matInput
+            placeholder="03/23"
+            autocomplete="cc-exp"
+            formControlName="expirationDate"
+            required
+          />
+          <mat-icon matSuffix>event</mat-icon>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>CVV</mat-label>
+          <input
+            name="cvv"
+            type="text"
+            matInput
+            placeholder="264"
+            autocomplete="cc-csc"
+            formControlName="cvv"
+            required
+          />
+          <mat-icon fontSet="material-icons-outlined" matSuffix>pin</mat-icon>
+        </mat-form-field>
+      </p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Summary</ng-template>
+    <form>
+      <mat-grid-list cols="4" rowHeight="200px" class="summary">
+        <div *ngIf="(products$ | async)?.slice(0, 3) as products">
+          <mat-grid-tile
+            [colspan]="1"
+            [rowspan]="1"
+            *ngFor="let product of products"
+          >
+            <mat-grid-tile-footer
+              >BGN: {{ product.price }}</mat-grid-tile-footer
+            >
+            <img
+              [src]="product.thumbnail"
+              alt="image of an {{ product.title }}"
+            />
+          </mat-grid-tile>
+          <ng-container *ngIf="products.length === 1">
+            <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+          </ng-container>
+          <ng-container *ngIf="products.length === 2">
+            <mat-grid-tile [colspan]="1" [rowspan]="1"> </mat-grid-tile>
+          </ng-container>
+        </div>
+
+        <mat-grid-tile [colspan]="1" [rowspan]="2">
+          <p mat-card-subtitle>Your Name</p>
+          <p>
+            {{ userDataFormGroup.get("name")?.value }}
+          </p>
+          <p mat-card-subtitle>Phone Number</p>
+          <p>
+            {{ userDataFormGroup.get("phoneNumber")?.value }}
+          </p>
+          <p mat-card-subtitle>Email</p>
+          <p>
+            {{ userDataFormGroup.get("email")?.value }}
+          </p>
+          <p mat-card-subtitle>Card Number</p>
+          <p>
+            {{ paymentFormGroup.get("cardNumber")?.value }}
+          </p>
+          <p mat-card-subtitle>Expiration Date</p>
+          <p>
+            {{ paymentFormGroup.get("expirationDate")?.value }}
+          </p>
+          <p mat-card-subtitle>CVV</p>
+          <p>
+            {{ paymentFormGroup.get("cvv")?.value }}
+          </p>
+          <mat-grid-tile-footer
+            >Total Price: {{ getCartTotal() }} BGN</mat-grid-tile-footer
+          >
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3" [rowspan]="1">
+          <p mat-card-subtitle>Ship to</p>
+          <p mat-card-title>{{ userAdressFormGroup.get("country")?.value }}</p>
+          <p mat-card-subtitle>Delivery adress</p>
+          <p mat-card-title>
+            {{
+              userAdressFormGroup.get("city")?.value +
+                ", " +
+                userAdressFormGroup.get("street")?.value +
+                userAdressFormGroup.get("streetNumber")?.value
+            }}
+          </p>
+          <mat-grid-tile-footer>Shipment Details</mat-grid-tile-footer>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <button
+        color="accent"
+        mat-raised-button
+        type="button"
+        (click)="submit()"
+        [disabled]="
+          userDataFormGroup.invalid &&
+          userAdressFormGroup.invalid &&
+          paymentFormGroup.invalid
+        "
+      >
+        Place Order
+      </button>
+    </form>
+  </mat-step>
+</mat-stepper>
