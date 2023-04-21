@@ -1,6 +1,6 @@
-<mat-stepper #stepper>
-  <mat-step [stepControl]="userDataFormGroup">
-    <form [formGroup]="userDataFormGroup">
+<mat-stepper #stepper [formGroup]="checkoutForm" linear>
+  <mat-step [stepControl]="checkoutForm.controls['userData']">
+    <form formGroupName="userData">
       <ng-template matStepLabel>Details</ng-template>
       <p>
         <mat-form-field appearance="outline">
@@ -51,8 +51,8 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="userAdressFormGroup" label="Adress">
-    <form [formGroup]="userAdressFormGroup">
+  <mat-step [stepControl]="checkoutForm.controls['userAdress']" label="Adress">
+    <form formGroupName="userAdress">
       <p>
         <mat-form-field appearance="outline">
           <mat-label>Country</mat-label>
@@ -123,9 +123,9 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="paymentFormGroup">
+  <mat-step [stepControl]="checkoutForm.controls['payment']">
     <ng-template matStepLabel>Payment</ng-template>
-    <form [formGroup]="paymentFormGroup">
+    <form formGroupName="payment">
       <p>
         <mat-form-field appearance="outline">
           <mat-label>Card Number</mat-label>
@@ -206,27 +206,27 @@
         <mat-grid-tile [colspan]="1" [rowspan]="2">
           <p mat-card-subtitle>Your Name</p>
           <p>
-            {{ userDataFormGroup.get("name")?.value }}
+            {{ getUserDataControl()!.get("name")?.value }}
           </p>
           <p mat-card-subtitle>Phone Number</p>
           <p>
-            {{ userDataFormGroup.get("phoneNumber")?.value }}
+            {{ getUserDataControl()!.get("phoneNumber")?.value }}
           </p>
           <p mat-card-subtitle>Email</p>
           <p>
-            {{ userDataFormGroup.get("email")?.value }}
+            {{ getUserDataControl()!.get("email")?.value }}
           </p>
           <p mat-card-subtitle>Card Number</p>
           <p>
-            {{ paymentFormGroup.get("cardNumber")?.value }}
+            {{ getPaymentControl()!.get("cardNumber")?.value }}
           </p>
           <p mat-card-subtitle>Expiration Date</p>
           <p>
-            {{ paymentFormGroup.get("expirationDate")?.value }}
+            {{ getPaymentControl()!.get("expirationDate")?.value }}
           </p>
           <p mat-card-subtitle>CVV</p>
           <p>
-            {{ paymentFormGroup.get("cvv")?.value }}
+            {{ getPaymentControl()!.get("cvv")?.value }}
           </p>
           <mat-grid-tile-footer
             >Total Price: {{ getCartTotal() }} BGN</mat-grid-tile-footer
@@ -234,14 +234,16 @@
         </mat-grid-tile>
         <mat-grid-tile [colspan]="3" [rowspan]="1">
           <p mat-card-subtitle>Ship to</p>
-          <p mat-card-title>{{ userAdressFormGroup.get("country")?.value }}</p>
+          <p mat-card-title>
+            {{ getUserAdressControl()!.get("country")?.value }}
+          </p>
           <p mat-card-subtitle>Delivery adress</p>
           <p mat-card-title>
             {{
-              userAdressFormGroup.get("city")?.value +
+              getUserAdressControl()!.get("city")?.value +
                 ", " +
-                userAdressFormGroup.get("street")?.value +
-                userAdressFormGroup.get("streetNumber")?.value
+                getUserAdressControl()!.get("street")?.value +
+                getUserAdressControl()!.get("streetNumber")?.value
             }}
           </p>
           <mat-grid-tile-footer>Shipment Details</mat-grid-tile-footer>
@@ -252,11 +254,7 @@
         mat-raised-button
         type="button"
         (click)="submit()"
-        [disabled]="
-          userDataFormGroup.invalid &&
-          userAdressFormGroup.invalid &&
-          paymentFormGroup.invalid
-        "
+        [disabled]="checkoutForm.invalid"
       >
         Place Order
       </button>

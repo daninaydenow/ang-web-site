@@ -7,16 +7,22 @@ import { CheckoutForm } from '../models/CheckoutForm';
 })
 export class CheckoutService {
   checkoutFormState = new BehaviorSubject<CheckoutForm>({
-    name: '',
-    phoneNumber: '',
-    email: '',
-    country: '',
-    city: '',
-    street: '',
-    streetNumber: '',
-    cardNumber: '',
-    expirationDate: '',
-    cvv: '',
+    userData: {
+      name: '',
+      phoneNumber: '',
+      email: '',
+    },
+    userAdress: {
+      country: '',
+      city: '',
+      street: '',
+      streetNumber: '',
+    },
+    payment: {
+      cardNumber: '',
+      expirationDate: '',
+      cvv: '',
+    },
   });
   constructor() {}
 
