@@ -20,10 +20,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { httpInterceptorProviders } from './app.interceptors';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent
-  ],
+  declarations: [AppComponent, NavbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -36,9 +33,7 @@ import { httpInterceptorProviders } from './app.interceptors';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
   ],
-  providers: [
-    httpInterceptorProviders
-  ],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

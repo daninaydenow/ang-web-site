@@ -1,16 +1,14 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+
+import { Observable, tap, takeUntil, Subject, take } from 'rxjs';
+
 import { Product } from 'src/app/products/models/Product';
 import { CartService } from '../service/cart.service';
-import { Observable, tap, takeUntil, Subject, take } from 'rxjs';
 import { CheckoutService } from '../service/checkout.service';
 import { CheckoutForm } from '../models/CheckoutForm';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -24,8 +22,6 @@ import {
   ],
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
-  private readonly horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-  private readonly verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   private readonly destroy$ = new Subject();
   products$!: Observable<Product[]>;
   checkoutForm = this.fb.group({
@@ -51,7 +47,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private cartService: CartService,
     private checkoutService: CheckoutService,
-    private snackBar: MatSnackBar
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -61,18 +57,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .getCheckoutFormState()
       .pipe(
         take(1),
-        tap((formState: CheckoutForm) => {
-          this.initForm(formState);
-        })
+        tap((formState: CheckoutForm) => this.initForm(formState))
       )
       .subscribe();
-    // Save form state...
+    // Save form state on valueChange...
     this.checkoutForm.valueChanges
       .pipe(
         takeUntil(this.destroy$),
-        tap((formState: CheckoutForm) => {
-          this.checkoutService.setCheckoutFormState({ ...formState });
-        })
+        tap((formState: CheckoutForm) =>
+          this.checkoutService.setCheckoutFormState(formState)
+        )
       )
       .subscribe();
     this.products$ = this.cartService.getCartList();
@@ -82,17 +76,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.destroy$.next('');
   }
 
-  getCartTotal(): string {
-    return this.cartService.getTotalPrice();
+  placeOrder(): void {
+    this.router.navigate(['order-placed']);
   }
 
-  submit(): void {
-    this.snackBar.open('Your order has been placed!', 'close', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration: 5000,
-      panelClass: 'successful-order',
-    });
+  getCartTotal(): string {
+    return this.cartService.getTotalPrice();
   }
 
   getUserDataControl(): AbstractControl | null {

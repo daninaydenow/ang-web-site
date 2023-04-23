@@ -9,6 +9,7 @@ import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { DetailsComponent } from './products/details/details.component';
 import { ProductsComponent } from './products/products.component';
 import { CheckoutComponent } from './cart/checkout/checkout.component';
+import { OrderPlacedComponent } from './cart/order-placed/order-placed.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,11 @@ const routes: Routes = [
   {
     path: 'checkout',
     component: CheckoutComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'order-placed',
+    component: OrderPlacedComponent,
     canActivate: [AuthGuard],
   },
   { path: 'details/:id', component: DetailsComponent },
