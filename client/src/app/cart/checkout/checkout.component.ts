@@ -77,6 +77,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   placeOrder(): void {
+    this.cartService.clearCart();
     this.router.navigate(['order-placed']);
   }
 
