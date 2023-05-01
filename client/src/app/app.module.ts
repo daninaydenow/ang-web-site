@@ -4,9 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './authentication/auth.module';
 import { CartModule } from './cart/cart.module';
 import { ProductsModule } from './products/products.module';
+import { ProfileModule } from './profile/profile.module';
 import { SharedModule } from './shared/shared/shared.module';
 
 import { AppComponent } from './app.component';
@@ -24,10 +26,12 @@ import { httpInterceptorProviders } from './app.interceptors';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     HttpClientModule,
     AuthModule,
     CartModule,
     ProductsModule,
+    ProfileModule,
     SharedModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),

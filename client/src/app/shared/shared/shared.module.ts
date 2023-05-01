@@ -17,6 +17,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [],
@@ -24,7 +25,6 @@ import { MatStepperModule } from '@angular/material/stepper';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -40,6 +40,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatTooltipModule,
     MatSelectModule,
     MatStepperModule,
+    MatSidenavModule,
   ],
   exports: [
     CommonModule,
@@ -61,6 +62,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatTooltipModule,
     MatSelectModule,
     MatStepperModule,
+    MatSidenavModule,
   ],
 })
 export class SharedModule {}

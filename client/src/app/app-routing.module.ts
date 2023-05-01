@@ -11,6 +11,11 @@ import { DetailsComponent } from './products/details/details.component';
 import { ProductsComponent } from './products/products.component';
 import { CheckoutComponent } from './cart/checkout/checkout.component';
 import { OrderPlacedComponent } from './cart/order-placed/order-placed.component';
+import { ProfileComponent } from './profile/profile/profile.component';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { MyOrdersComponent } from './profile/my-orders/my-orders.component';
+import { PaymentMethodComponent } from './profile/payment-method/payment-method.component';
+import { DeliveryAdressComponent } from './profile/delivery-adress/delivery-adress.component';
 
 const routes: Routes = [
   {
@@ -34,6 +39,39 @@ const routes: Routes = [
     path: 'checkout',
     component: CheckoutComponent,
     canActivate: [AuthGuard, CheckoutGuard],
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'edit-profile', pathMatch: 'full' },
+      {
+        path: 'edit-profile',
+        component: EditProfileComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'my-orders',
+        component: MyOrdersComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'edit-profile',
+        component: EditProfileComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'payment-method',
+        component: PaymentMethodComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'delivery-adress',
+        component: DeliveryAdressComponent,
+        canActivate: [AuthGuard],
+      },
+    ],
   },
   {
     path: 'order-placed',
