@@ -17,7 +17,7 @@ export class SignOutComponent {
       .then(() => {
         // clear local storage
         localStorage.clear();
-        // set new user value 
+        // set new user value
         this.authService.setUser(JSON.parse(localStorage.getItem('user')!));
         // navigate to sign in page
         this.router.navigate(['/sign-in']);

@@ -1,1 +1,60 @@
-<p>edit-profile works!</p>
+<div class="profile-container">
+  <form
+    class="user-form"
+    [formGroup]="profileForm"
+    method="POST"
+    (ngSubmit)="saveUserCredentials()"
+  >
+    <div class="avatar">
+      <img mat-card-avatar [src]="user?.photoURL" />
+    </div>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input
+          name="displayName"
+          type="text"
+          matInput
+          placeholder="First name, Last name"
+          formControlName="displayName"
+          required
+        />
+        <mat-icon matSuffix fontSet="material-icons-outlined">badge</mat-icon>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Photo Url</mat-label>
+        <input
+          name="photoURL"
+          type="text"
+          matInput
+          formControlName="photoURL"
+        />
+        <mat-icon matSuffix fontSet="material-icons-outlined">image</mat-icon>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          name="email"
+          type="text"
+          matInput
+          placeholder="abc@gmail.com"
+          formControlName="email"
+          required
+        />
+        <mat-icon matSuffix fontSet="material-icons-outlined">email</mat-icon>
+      </mat-form-field>
+    </p>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="profileForm.invalid || profileForm.pristine"
+    >
+      Save
+    </button>
+  </form>
+</div>

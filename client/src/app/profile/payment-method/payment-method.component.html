@@ -1,1 +1,110 @@
-<p>payment-method works!</p>
+<div
+  class="payment-methods-container"
+  *ngIf="paymentMethods$ | async as paymentMethods"
+>
+  <mat-grid-list cols="1" rowHeight="12rem" class="cards-list">
+    <mat-grid-tile *ngFor="let card of paymentMethods">
+      <mat-card class="payment-card">
+        <mat-card-content>
+          <mat-card-subtitle
+            >Card Number
+            <mat-icon
+              class="delete-icon"
+              (click)="deleteCard(card.id!)"
+              matTooltip="Delete this card"
+              >delete</mat-icon
+            ></mat-card-subtitle
+          >
+          <p>{{ card.cardNumber }}</p>
+          <mat-card-subtitle>Exp: {{ card.expirationDate }}</mat-card-subtitle>
+          <mat-card-subtitle
+            >cvv:
+            {{ showCvv.show && card.id === showCvv.id ? card.cvv : "***" }}
+            <mat-icon
+              class="visibility-icon"
+              (click)="showCardCvv(card.id!)"
+              matTooltip="{{
+                showCvv.show && card.id === showCvv.id ? 'Hide Cvv' : 'Show Cvv'
+              }}"
+              >{{
+                showCvv.show && card.id === showCvv.id
+                  ? "visibility"
+                  : "visibility_off"
+              }}</mat-icon
+            ></mat-card-subtitle
+          >
+        </mat-card-content>
+        <mat-card-actions
+          *ngIf="currentlyUsed$ | async as currentlyUsed"
+          align="end"
+        >
+          <mat-radio-button
+            value="1"
+            color="primary"
+            labelPosition="before"
+            checked="{{ card.id === currentlyUsed['currentlyUsed'] }}"
+            (change)="changeCurrentlyUsed(card.id!)"
+            >{{
+              card.id === currentlyUsed["currentlyUsed"]
+                ? "Currently using"
+                : "Use this card"
+            }}</mat-radio-button
+          >
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <form
+    class="payment-form"
+    [formGroup]="paymentMethodForm"
+    (ngSubmit)="createCard()"
+  >
+    <h1>Add new card</h1>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Card Number</mat-label>
+        <input
+          matInput
+          name="cardNumber"
+          type="text"
+          placeholder="1111-2222-3333-4444"
+          autocomplete="cc-number"
+          formControlName="cardNumber"
+          required
+        />
+        <mat-icon matSuffix>credit_card</mat-icon>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Expiration Date</mat-label>
+        <input
+          name="expirationDate"
+          type="text"
+          matInput
+          placeholder="03/23"
+          autocomplete="cc-exp"
+          formControlName="expirationDate"
+          required
+        />
+        <mat-icon matSuffix>event</mat-icon>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>CVV</mat-label>
+        <input
+          name="cvv"
+          type="text"
+          matInput
+          placeholder="264"
+          autocomplete="cc-csc"
+          formControlName="cvv"
+          required
+        />
+        <mat-icon fontSet="material-icons-outlined" matSuffix>pin</mat-icon>
+      </mat-form-field>
+    </p>
+    <button mat-button [disabled]="paymentMethodForm.invalid">Add</button>
+  </form>
+</div>

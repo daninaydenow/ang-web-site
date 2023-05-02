@@ -18,6 +18,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -41,6 +43,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatSelectModule,
     MatStepperModule,
     MatSidenavModule,
+    MatRadioModule,
+    MatCheckboxModule,
   ],
   exports: [
     CommonModule,
@@ -63,6 +67,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatSelectModule,
     MatStepperModule,
     MatSidenavModule,
+    MatRadioModule,
+    MatCheckboxModule,
   ],
 })
 export class SharedModule {}

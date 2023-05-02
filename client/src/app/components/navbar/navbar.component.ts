@@ -1,9 +1,9 @@
-import { Component} from '@angular/core';
-import { Observable} from 'rxjs';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Product } from 'src/app/products/models/Product';
-import { User } from 'src/app/authentication/models/User';
 import { AuthenticationService } from '../../authentication/service/authentication.service';
 import { CartService } from '../../cart/service/cart.service';
+import { IUser } from 'src/app/authentication/models/User';
 
 @Component({
   selector: 'app-navbar',
@@ -11,9 +11,12 @@ import { CartService } from '../../cart/service/cart.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-  public user$!: Observable<User>;
+  public user$!: Observable<IUser>;
   public cartItems$!: Observable<Product[]>;
-  constructor(private authService: AuthenticationService, private cartService: CartService) {
+  constructor(
+    private authService: AuthenticationService,
+    private cartService: CartService
+  ) {
     this.user$ = this.authService.getUser();
     this.cartItems$ = this.cartService.getCartList();
   }

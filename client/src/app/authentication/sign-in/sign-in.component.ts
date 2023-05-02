@@ -4,8 +4,12 @@ import { UserCredential } from '@angular/fire/auth';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../service/authentication.service';
-import { User } from 'src/app/authentication/models/User';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { IUser } from 'src/app/authentication/models/User';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sign-in',
@@ -71,7 +75,7 @@ export class SignInComponent {
       // extract token from credentials
       const token: string = await userCredentials.user.getIdToken(false);
       // create user object
-      const user: User = {
+      const user: IUser = {
         uid: userCredentials.user.uid,
         email: userCredentials.user.email,
         token,

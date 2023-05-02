@@ -4,16 +4,19 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   UserCredential,
+  updateProfile,
+  User,
+  user,
 } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../models/User';
+import { IUser } from '../models/User';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private userSource = new BehaviorSubject<User>(
+  private userSource = new BehaviorSubject<IUser>(
     JSON.parse(localStorage.getItem('user')!)
   );
 
@@ -23,13 +26,29 @@ export class AuthenticationService {
     return localStorage.getItem('user') ? true : false;
   }
 
-  setUser(user: User): void {
+  setUser(user: IUser): void {
     this.userSource.next(user);
   }
 
-  getUser(): Observable<User> {
+  getUser(): Observable<IUser> {
     return this.userSource.asObservable();
   }
+
+  getFirebaseUser(): Observable<User | null> {
+    return user(this.auth);
+  }
+
+  updateUserProfile(userData: any): Promise<void> {
+    return updateProfile(this.auth.currentUser!, userData);
+  }
+
+  // signInWithPhone(phoneNumber: string): Promise<ConfirmationResult> {
+  //   return signInWithPhoneNumber(
+  //     this.auth,
+  //     phoneNumber,
+  //     (window as any).recaptchaVerifier
+  //   );
+  // }
 
   signIn(email: string, password: string): Promise<UserCredential> {
     return signInWithEmailAndPassword(this.auth, email, password);

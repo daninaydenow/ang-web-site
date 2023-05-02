@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { UserCredential } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
 
@@ -99,7 +103,7 @@ export class SignUpComponent {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: 5000,
-      })
+      });
       return false;
     }
   }

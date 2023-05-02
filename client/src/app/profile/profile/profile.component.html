@@ -4,24 +4,26 @@
       <a class="link" routerLink="edit-profile" mat-button
         ><mat-icon>manage_accounts</mat-icon> Edit Profile</a
       >
-      <a class="link" routerLink="my-orders" mat-button
-        ><mat-icon>history</mat-icon>Order History</a
-      >
       <a class="link" routerLink="payment-method" mat-button
         ><mat-icon>payments</mat-icon> Payment Method</a
       >
       <a class="link" routerLink="delivery-adress" mat-button
         ><mat-icon>local_shipping</mat-icon> Delivery Adress</a
       >
+      <a class="link" routerLink="my-orders" mat-button
+        ><mat-icon>history</mat-icon>Order History</a
+      >
       <span class="spacer"></span>
       <a class="link" routerLink="/sign-out" mat-button
-        ><mat-icon>logout</mat-icon> Log Out</a
+        ><mat-icon>logout</mat-icon> Sign Out</a
       >
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <button mat-button (click)="sidenav.toggle()">
-      <mat-icon>{{ opened ? "chevron_left" : "chevron_right" }}</mat-icon>
+      <mat-icon matTooltip="{{ opened ? 'Close menu' : 'Open menu' }}">{{
+        opened ? "chevron_left" : "chevron_right"
+      }}</mat-icon>
     </button>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

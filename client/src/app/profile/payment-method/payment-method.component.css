@@ -1,0 +1,42 @@
+.payment-methods-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0px 0px 3px -1px;
+  border-radius: 10px;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin: 20px;
+  height: 21rem;
+  box-shadow: 0px 0px 3px -1px;
+  border-radius: 10px;
+}
+
+.cards-list {
+  width: 20rem;
+}
+
+.visibility-icon {
+  position: absolute;
+  top: 5rem;
+  left: 18rem;
+  cursor: pointer;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 1rem;
+  left: 18rem;
+  cursor: pointer;
+}
+
+mat-card-subtitle {
+  margin-bottom: 0;
+}
