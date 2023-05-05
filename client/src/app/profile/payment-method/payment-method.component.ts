@@ -3,13 +3,8 @@ import { PaymentMethodService } from '../services/payment-method.service';
 import { Observable } from 'rxjs';
 import { PaymentMethod } from '../model/paymentMethod.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DocumentData, DocumentReference } from 'firebase/firestore';
-import {
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { DocumentData } from 'firebase/firestore';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-payment-method',
@@ -17,11 +12,9 @@ import {
   styleUrls: ['./payment-method.component.css'],
 })
 export class PaymentMethodComponent implements OnInit {
-  private readonly horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-  private readonly verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   private readonly snackBarSettings: MatSnackBarConfig = {
-    horizontalPosition: this.horizontalPosition,
-    verticalPosition: this.verticalPosition,
+    horizontalPosition: 'end',
+    verticalPosition: 'bottom',
     duration: 5000,
   };
   paymentMethods$!: Observable<PaymentMethod[]>;
@@ -61,7 +54,7 @@ export class PaymentMethodComponent implements OnInit {
           this.paymentMethodForm.reset();
         })
         .catch((error) =>
-          this.snackBar.open(error.message, 'close', this.snackBarSettings)
+          this.snackBar.open(error.message, '', this.snackBarSettings)
         );
     }
   }
@@ -73,7 +66,7 @@ export class PaymentMethodComponent implements OnInit {
         this.snackBar.open(
           "You've successfully changed your payment method!",
           'close',
-          this.snackBarSettings
+          { ...this.snackBarSettings, panelClass: 'success' }
         )
       )
       .catch((error) => {

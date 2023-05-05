@@ -24,3 +24,12 @@ body {
 .mat-grid-tile > .mat-grid-tile-content > p {
   padding-inline: 10px;
 }
+
+.success {
+  color: white;
+  background-color: #4bb543;
+}
+
+.success .mat-simple-snackbar-action {
+  color: white;
+}

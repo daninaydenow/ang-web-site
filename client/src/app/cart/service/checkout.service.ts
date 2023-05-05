@@ -6,10 +6,10 @@ import { CheckoutForm } from '../models/CheckoutForm';
   providedIn: 'root',
 })
 export class CheckoutService {
+  private initialLoad = true;
   checkoutFormState = new BehaviorSubject<CheckoutForm>({
     userData: {
       name: '',
-      phoneNumber: '',
       email: '',
     },
     userAdress: {
@@ -25,6 +25,14 @@ export class CheckoutService {
     },
   });
   constructor() {}
+
+  isInitialLoad(): boolean {
+    return this.initialLoad;
+  }
+
+  setInitialLoad(value: boolean): void {
+    this.initialLoad = value;
+  }
 
   getCheckoutFormState(): Observable<CheckoutForm> {
     return this.checkoutFormState.asObservable();

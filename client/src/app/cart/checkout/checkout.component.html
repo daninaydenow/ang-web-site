@@ -18,22 +18,6 @@
       </p>
       <p>
         <mat-form-field appearance="outline">
-          <mat-label>Phone Number</mat-label>
-          <input
-            name="phoneNumber"
-            type="text"
-            matInput
-            placeholder="08********"
-            formControlName="phoneNumber"
-            required
-          />
-          <mat-icon matSuffix fontSet="material-icons-outlined"
-            >phone_android</mat-icon
-          >
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input
             name="email"
@@ -207,10 +191,6 @@
           <p mat-card-subtitle>Your Name</p>
           <p>
             {{ getUserDataControl()!.get("name")?.value }}
-          </p>
-          <p mat-card-subtitle>Phone Number</p>
-          <p>
-            {{ getUserDataControl()!.get("phoneNumber")?.value }}
           </p>
           <p mat-card-subtitle>Email</p>
           <p>

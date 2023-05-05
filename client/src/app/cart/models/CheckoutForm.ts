@@ -1,7 +1,6 @@
 export interface CheckoutForm {
   userData: {
     name: string;
-    phoneNumber: string;
     email: string;
   };
   userAdress: {

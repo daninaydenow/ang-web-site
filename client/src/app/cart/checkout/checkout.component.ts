@@ -1,14 +1,34 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { Auth } from '@angular/fire/auth';
 
-import { Observable, tap, takeUntil, Subject, take } from 'rxjs';
+import {
+  Observable,
+  tap,
+  Subject,
+  take,
+  switchMap,
+  map,
+  combineLatest,
+  catchError,
+  throwError,
+} from 'rxjs';
+import {
+  MatSnackBar,
+  MatSnackBarConfig,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 import { Product } from 'src/app/products/models/Product';
-import { CartService } from '../service/cart.service';
-import { CheckoutService } from '../service/checkout.service';
 import { CheckoutForm } from '../models/CheckoutForm';
-import { Router } from '@angular/router';
+import { Adress } from 'src/app/profile/model/Adress.model';
+import { PaymentMethod } from 'src/app/profile/model/paymentMethod.model';
+import { CartService } from '../service/cart.service';
+import { UserService } from 'src/app/profile/services/user.service';
+import { PaymentMethodService } from 'src/app/profile/services/payment-method.service';
 
 @Component({
   selector: 'app-checkout',
@@ -22,12 +42,18 @@ import { Router } from '@angular/router';
   ],
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  private readonly horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  private readonly verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  private readonly snackBarSettings: MatSnackBarConfig = {
+    horizontalPosition: this.horizontalPosition,
+    verticalPosition: this.verticalPosition,
+    duration: 5000,
+  };
   private readonly destroy$ = new Subject();
   products$!: Observable<Product[]>;
   checkoutForm = this.fb.group({
     userData: this.fb.group({
       name: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
       email: ['', Validators.required],
     }),
     userAdress: this.fb.group({
@@ -46,26 +72,45 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private cartService: CartService,
-    private checkoutService: CheckoutService,
-    private router: Router
+    private userService: UserService,
+    private paymentMethodService: PaymentMethodService,
+    private auth: Auth,
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    // Initialize form with state if there is any...
-    // Else init empty form ...
-    this.checkoutService
-      .getCheckoutFormState()
+    combineLatest([
+      this.userService.getUserAdress(),
+      this.paymentMethodService.getCurrentlyUsedPaymentMethod().pipe(
+        switchMap((currentlyUsed: { currentlyUsed: string }) => {
+          return this.paymentMethodService
+            .getUserPaymentMethods()
+            .pipe(
+              map((paymentMethods: PaymentMethod[]) =>
+                paymentMethods.find(
+                  (method) => method.id === currentlyUsed.currentlyUsed
+                )
+              )
+            );
+        })
+      ),
+    ])
       .pipe(
+        catchError((error) => {
+          this.snackBar.open(error, 'close', this.snackBarSettings);
+          return throwError(() => error);
+        }),
         take(1),
-        tap((formState: CheckoutForm) => this.initForm(formState))
-      )
-      .subscribe();
-    // Save form state on valueChange...
-    this.checkoutForm.valueChanges
-      .pipe(
-        takeUntil(this.destroy$),
-        tap((formState: CheckoutForm) =>
-          this.checkoutService.setCheckoutFormState(formState)
+        tap(([adress, paymentMethod]: [Adress, PaymentMethod | undefined]) =>
+          this.initForm({
+            userData: {
+              name: this.auth.currentUser?.displayName || '',
+              email: this.auth.currentUser?.email || '',
+            },
+            userAdress: adress,
+            payment: paymentMethod!,
+          })
         )
       )
       .subscribe();
@@ -101,7 +146,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.checkoutForm = this.fb.group({
       userData: this.fb.group({
         name: [formState.userData.name, Validators.required],
-        phoneNumber: [formState.userData.phoneNumber, Validators.required],
         email: [formState.userData.email, Validators.required],
       }),
       userAdress: this.fb.group({

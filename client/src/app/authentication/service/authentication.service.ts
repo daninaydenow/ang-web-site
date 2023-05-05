@@ -42,14 +42,6 @@ export class AuthenticationService {
     return updateProfile(this.auth.currentUser!, userData);
   }
 
-  // signInWithPhone(phoneNumber: string): Promise<ConfirmationResult> {
-  //   return signInWithPhoneNumber(
-  //     this.auth,
-  //     phoneNumber,
-  //     (window as any).recaptchaVerifier
-  //   );
-  // }
-
   signIn(email: string, password: string): Promise<UserCredential> {
     return signInWithEmailAndPassword(this.auth, email, password);
   }

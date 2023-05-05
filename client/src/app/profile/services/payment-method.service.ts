@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   collection,
@@ -17,8 +17,7 @@ import { DocumentData, DocumentReference, deleteDoc } from 'firebase/firestore';
   providedIn: 'root',
 })
 export class PaymentMethodService {
-  private firestore: Firestore = inject(Firestore);
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth, private firestore: Firestore) {}
 
   deleteCard(id: string): Promise<void> {
     return deleteDoc(
@@ -49,10 +48,10 @@ export class PaymentMethodService {
     ) as Observable<PaymentMethod[]>;
   }
 
-  getCurrentlyUsedPaymentMethod(): Observable<any> {
+  getCurrentlyUsedPaymentMethod(): Observable<{ currentlyUsed: string }> {
     return docData(
       doc(this.firestore, `paymentMethods/${this.auth.currentUser?.uid}`)
-    ) as Observable<any>;
+    ) as Observable<{ currentlyUsed: string }>;
   }
 
   changeCurrentlyUsedPaymentMethod(cardId: string): Promise<void> {
