@@ -2,7 +2,7 @@
   width: 250px;
   height: 400px;
   overflow: hidden;
-  margin: 1rem;
+  /* margin: 1rem; */
 }
 
 .mat-card-image {
@@ -28,6 +28,6 @@
 }
 
 .item-actions {
-  display: flex; 
+  display: flex;
   justify-content: space-between;
 }
