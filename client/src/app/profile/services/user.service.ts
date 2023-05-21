@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
 import {
   collection,
@@ -25,5 +25,14 @@ export class UserService {
     return docData(
       doc(this.firestore, `userAdress/${this.auth.currentUser?.uid}`)
     ) as Observable<Adress>;
+  }
+
+  updateADress(adress: Adress): Observable<void> {
+    return from(
+      updateDoc(
+        doc(this.firestore, `userAdress/${this.auth.currentUser?.uid}`),
+        { ...adress }
+      )
+    );
   }
 }

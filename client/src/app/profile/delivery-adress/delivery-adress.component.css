@@ -1,0 +1,9 @@
+.delivery-adress-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0px 0px 3px -1px;
+  border-radius: 10px;
+}

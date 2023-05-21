@@ -1,1 +1,73 @@
-<p>delivery-adress works!</p>
+<div class="delivery-adress-container">
+  <form [formGroup]="userAdressForm" (ngSubmit)="updateAdress()">
+    <h1>Delivery adress</h1>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Country</mat-label>
+        <input
+          name="country"
+          type="text"
+          matInput
+          placeholder="Bulgaria, France, UK etc..."
+          formControlName="country"
+          required
+        />
+        <mat-icon matSuffix fontSet="material-icons-outlined"
+          >language</mat-icon
+        >
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input
+          name="city"
+          type="text"
+          matInput
+          placeholder="Sofia, Paris, London etc..."
+          formControlName="city"
+          required
+        />
+        <mat-icon matSuffix fontSet="material-icons-outlined"
+          >location_city</mat-icon
+        >
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Street</mat-label>
+        <input
+          name="street"
+          type="text"
+          matInput
+          placeholder="First street"
+          formControlName="street"
+          required
+        />
+        <mat-icon matSuffix fontSet="material-icons-outlined"
+          >signpost</mat-icon
+        >
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Street Number</mat-label>
+        <input
+          name="streetNumber"
+          type="text"
+          matInput
+          placeholder="10"
+          formControlName="streetNumber"
+          required
+        />
+        <mat-icon matSuffix fontSet="material-icons-outlined">numbers</mat-icon>
+      </mat-form-field>
+    </p>
+    <button
+      mat-button
+      [disabled]="userAdressForm.invalid || this.userAdressForm.pristine"
+    >
+      Update
+    </button>
+  </form>
+</div>
